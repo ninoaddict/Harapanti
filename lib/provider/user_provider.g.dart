@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'job_provider.dart';
+part of 'user_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$pantiDataHash() => r'a899ada88762947190916cb5b9415a4dd4845b73';
+String _$isAdminHash() => r'62f59bb2578294b9355d123c8f9046c78be89eb7';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,30 +29,30 @@ class _SystemHash {
   }
 }
 
-/// See also [pantiData].
-@ProviderFor(pantiData)
-const pantiDataProvider = PantiDataFamily();
+/// See also [isAdmin].
+@ProviderFor(isAdmin)
+const isAdminProvider = IsAdminFamily();
 
-/// See also [pantiData].
-class PantiDataFamily extends Family<AsyncValue<List<Panti>>> {
-  /// See also [pantiData].
-  const PantiDataFamily();
+/// See also [isAdmin].
+class IsAdminFamily extends Family<AsyncValue<bool>> {
+  /// See also [isAdmin].
+  const IsAdminFamily();
 
-  /// See also [pantiData].
-  PantiDataProvider call(
-    String cityQuery,
+  /// See also [isAdmin].
+  IsAdminProvider call(
+    String userId,
   ) {
-    return PantiDataProvider(
-      cityQuery,
+    return IsAdminProvider(
+      userId,
     );
   }
 
   @override
-  PantiDataProvider getProviderOverride(
-    covariant PantiDataProvider provider,
+  IsAdminProvider getProviderOverride(
+    covariant IsAdminProvider provider,
   ) {
     return call(
-      provider.cityQuery,
+      provider.userId,
     );
   }
 
@@ -68,90 +68,90 @@ class PantiDataFamily extends Family<AsyncValue<List<Panti>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'pantiDataProvider';
+  String? get name => r'isAdminProvider';
 }
 
-/// See also [pantiData].
-class PantiDataProvider extends AutoDisposeFutureProvider<List<Panti>> {
-  /// See also [pantiData].
-  PantiDataProvider(
-    String cityQuery,
+/// See also [isAdmin].
+class IsAdminProvider extends AutoDisposeFutureProvider<bool> {
+  /// See also [isAdmin].
+  IsAdminProvider(
+    String userId,
   ) : this._internal(
-          (ref) => pantiData(
-            ref as PantiDataRef,
-            cityQuery,
+          (ref) => isAdmin(
+            ref as IsAdminRef,
+            userId,
           ),
-          from: pantiDataProvider,
-          name: r'pantiDataProvider',
+          from: isAdminProvider,
+          name: r'isAdminProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$pantiDataHash,
-          dependencies: PantiDataFamily._dependencies,
-          allTransitiveDependencies: PantiDataFamily._allTransitiveDependencies,
-          cityQuery: cityQuery,
+                  : _$isAdminHash,
+          dependencies: IsAdminFamily._dependencies,
+          allTransitiveDependencies: IsAdminFamily._allTransitiveDependencies,
+          userId: userId,
         );
 
-  PantiDataProvider._internal(
+  IsAdminProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.cityQuery,
+    required this.userId,
   }) : super.internal();
 
-  final String cityQuery;
+  final String userId;
 
   @override
   Override overrideWith(
-    FutureOr<List<Panti>> Function(PantiDataRef provider) create,
+    FutureOr<bool> Function(IsAdminRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: PantiDataProvider._internal(
-        (ref) => create(ref as PantiDataRef),
+      override: IsAdminProvider._internal(
+        (ref) => create(ref as IsAdminRef),
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        cityQuery: cityQuery,
+        userId: userId,
       ),
     );
   }
 
   @override
-  AutoDisposeFutureProviderElement<List<Panti>> createElement() {
-    return _PantiDataProviderElement(this);
+  AutoDisposeFutureProviderElement<bool> createElement() {
+    return _IsAdminProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is PantiDataProvider && other.cityQuery == cityQuery;
+    return other is IsAdminProvider && other.userId == userId;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, cityQuery.hashCode);
+    hash = _SystemHash.combine(hash, userId.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
-mixin PantiDataRef on AutoDisposeFutureProviderRef<List<Panti>> {
-  /// The parameter `cityQuery` of this provider.
-  String get cityQuery;
+mixin IsAdminRef on AutoDisposeFutureProviderRef<bool> {
+  /// The parameter `userId` of this provider.
+  String get userId;
 }
 
-class _PantiDataProviderElement
-    extends AutoDisposeFutureProviderElement<List<Panti>> with PantiDataRef {
-  _PantiDataProviderElement(super.provider);
+class _IsAdminProviderElement extends AutoDisposeFutureProviderElement<bool>
+    with IsAdminRef {
+  _IsAdminProviderElement(super.provider);
 
   @override
-  String get cityQuery => (origin as PantiDataProvider).cityQuery;
+  String get userId => (origin as IsAdminProvider).userId;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

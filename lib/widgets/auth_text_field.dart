@@ -11,13 +11,17 @@ class AuthTextField extends StatefulWidget {
     required this.tipeInput,
     required this.validator,
     required this.onSaved,
+    this.initValue,
+    this.isDisabled,
   });
 
   String? Function(String?)? validator;
+  String? initValue;
   void Function(String?)? onSaved;
   bool? obscureText;
-  final String hintText;
+  final String? hintText;
   final TextInputType tipeInput;
+  bool? isDisabled;
 
   @override
   State<AuthTextField> createState() {
@@ -29,9 +33,11 @@ class _AuthTextFieldState extends State<AuthTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: widget.initValue,
       onSaved: widget.onSaved,
       validator: widget.validator,
       obscureText: widget.obscureText ?? false,
+      readOnly: widget.isDisabled ?? false,
       decoration: InputDecoration(
         contentPadding:
             const EdgeInsets.symmetric(vertical: 10, horizontal: 16),

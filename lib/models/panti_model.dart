@@ -8,5 +8,12 @@ class Panti with _$Panti {
     required String pantiName,
     required String city,
     required String description,
+    required int numberOfAttendant,
+    required int numberOfResident,
+    required String phoneNumber,
+    required String biography,
+    required String address,
+    required String pengelola,
+    required int est,
   }) = _Panti;
 }

@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:harapanti/ui/panti.dart';
+import 'package:harapanti/ui/organization/openvacancy.dart';
+import 'package:harapanti/ui/personal/panti.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:google_fonts/google_fonts.dart';
-import 'package:harapanti/ui/vacancy.dart';
+import 'package:harapanti/ui/personal/vacancy.dart';
 import 'package:harapanti/widgets/navigation_bar_item.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class AdminHomePage extends StatefulWidget {
+  const AdminHomePage({super.key});
 
   @override
-  State<HomePage> createState() {
-    return _HomePageState();
+  State<AdminHomePage> createState() {
+    return _AdminHomePageState();
   }
 }
 
-class _HomePageState extends State<HomePage> {
+class _AdminHomePageState extends State<AdminHomePage> {
   int _selectedPageIndex = 0;
 
   final _screenList = [
-    const VacancyPage(),
+    const OpenVacancyPage(),
     const PantiPage(),
     const VacancyPage(),
   ];
@@ -45,13 +46,13 @@ class _HomePageState extends State<HomePage> {
             child: _selectedPageIndex == 0
                 ? SelectedNavigationBarItem(
                     barIcon: Icons.work_rounded,
-                    barLabel: "Relawan",
+                    barLabel: "Buka Lowongan",
                     isBarSelected: true,
                     lineWidth: 70,
                   )
                 : SelectedNavigationBarItem(
                     barIcon: Icons.work_outline_outlined,
-                    barLabel: "Relawan",
+                    barLabel: "Buka Lowongan",
                     isBarSelected: false,
                   ),
             onTap: () {
@@ -62,13 +63,13 @@ class _HomePageState extends State<HomePage> {
             child: _selectedPageIndex == 1
                 ? SelectedNavigationBarItem(
                     barIcon: Icons.home_work_rounded,
-                    barLabel: "Daftar Panti",
+                    barLabel: "Data Panti",
                     isBarSelected: true,
                     lineWidth: 85,
                   )
                 : SelectedNavigationBarItem(
                     barIcon: Icons.home_work_outlined,
-                    barLabel: "Daftar Panti",
+                    barLabel: "Data Panti",
                     isBarSelected: false,
                   ),
             onTap: () {
@@ -79,13 +80,13 @@ class _HomePageState extends State<HomePage> {
             child: _selectedPageIndex == 2
                 ? SelectedNavigationBarItem(
                     barIcon: Icons.handshake_rounded,
-                    barLabel: "Donasi",
+                    barLabel: "Buka Donasi",
                     isBarSelected: true,
                     lineWidth: 85,
                   )
                 : SelectedNavigationBarItem(
                     barIcon: Icons.handshake_outlined,
-                    barLabel: "Donasi",
+                    barLabel: "Buka Donasi",
                     isBarSelected: false,
                   ),
             onTap: () {
@@ -102,7 +103,10 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: customNavBar(context),
-      body: _screenList[_selectedPageIndex],
+      body: IndexedStack(
+        index: _selectedPageIndex,
+        children: _screenList,
+      ),
     );
   }
 }

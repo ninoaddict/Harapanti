@@ -1,11 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:harapanti/intermediete.dart';
 import 'package:harapanti/ui/auth/auth.dart';
-import 'package:harapanti/ui/home.dart';
+import 'package:harapanti/ui/personal/home.dart';
 import 'firebase_options.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:harapanti/ui/organization/adminhome.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +24,6 @@ void main() async {
 
 class App extends StatelessWidget {
   const App({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -54,9 +56,7 @@ class App extends StatelessWidget {
           }
 
           if (snapshot.hasData) {
-            return const Center(
-              child: HomePage(),
-            );
+            return const IntermedietePage();
           }
 
           return const AuthPage();

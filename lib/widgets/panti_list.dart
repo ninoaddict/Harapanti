@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:harapanti/models/panti_model.dart';
-import 'package:harapanti/provider/job_provider.dart';
+import 'package:harapanti/provider/panti_provider.dart';
+import 'package:harapanti/ui/personal/panti_detail.dart';
 import 'package:harapanti/widgets/panti_item.dart';
 
 class PantiList extends ConsumerWidget {
   const PantiList({super.key, required this.city});
 
   final String city;
+
+  void _selectPanti(BuildContext context, Panti dataPanti) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => PantiDetailPage(dataPanti: dataPanti),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,7 +31,10 @@ class PantiList extends ConsumerWidget {
                 padding: EdgeInsets.zero,
                 itemCount: value.length,
                 itemBuilder: (context, index) {
-                  return PantiItem(pantiItemData: value[index]);
+                  return PantiItem(
+                    pantiItemData: value[index],
+                    onSelect: _selectPanti,
+                  );
                 },
               ),
             ),

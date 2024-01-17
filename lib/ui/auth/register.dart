@@ -57,12 +57,33 @@ class _RegisterPageState extends State<RegisterPage> {
       await FirebaseFirestore.instance
           .collection('users')
           .doc(userCredentials.user!.uid)
-          .set({
-        'username': _enteredUsername,
-        'email': _enteredEmail,
-        'category':
-            accountType == AccountType.personal ? 'personal' : 'organization'
-      });
+          .set(
+        {
+          'username': _enteredUsername,
+          'email': _enteredEmail,
+          'category':
+              accountType == AccountType.personal ? 'personal' : 'organization'
+        },
+      );
+      if (accountType == AccountType.organization) {
+        final Map<String, dynamic> pantiInitialData = {
+          'address': '-',
+          'pantiName': '-',
+          'city': '-',
+          'description': '-',
+          'numberOfAttendant': 0,
+          'numberOfResident': 0,
+          'phoneNumber': '-',
+          'biography': '-',
+          'pengelola': '-',
+          'est': 1900,
+          'userID': userCredentials.user!.uid,
+        };
+
+        await FirebaseFirestore.instance
+            .collection('pantiData')
+            .add(pantiInitialData);
+      }
     } on FirebaseAuthException catch (error) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).clearSnackBars();

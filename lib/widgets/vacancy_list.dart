@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:harapanti/ui/personal/vacancy_detail.dart';
 import 'package:harapanti/widgets/vacancy_item.dart';
 
 class VacancyList extends StatefulWidget {
@@ -31,7 +32,13 @@ class _VacancyListState extends State<VacancyList> {
         .snapshots();
   }
 
-  // void _selectJob(Map<String, dynamic> va)
+  void _selectJob(Map<String, dynamic> vacancyData, String vacancyID) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+          builder: (ctx) => VacancyDetailPage(
+              vacancyData: vacancyData, vacancyID: vacancyID)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +67,10 @@ class _VacancyListState extends State<VacancyList> {
               String vacancyID = snapshot.data!.docs[0].id;
               Map<String, dynamic> data =
                   snapshot.data!.docs[index].data() as Map<String, dynamic>;
-              return VacancyItem(vacancyData: data);
+              return VacancyItem(
+                  vacancyData: data,
+                  onSelectJob: _selectJob,
+                  vacancyID: vacancyID);
             },
           ),
         );

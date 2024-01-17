@@ -80,6 +80,7 @@ flutter:
     - assets/images/account_profile.png
     - assets/images/filter.svg
     - assets/images/dummy.png
+    - assets/images/dummy_panti.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
