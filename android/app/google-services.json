@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "665056420156",
+    "project_id": "harapanti",
+    "storage_bucket": "harapanti.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:665056420156:android:2c38a6aeaf494697937e39",
+        "android_client_info": {
+          "package_name": "com.example.harapanti"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeTii7y-N-hB8NLNP0GwxHJbua8u-vO7U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
