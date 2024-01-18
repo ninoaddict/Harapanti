@@ -61,7 +61,7 @@ Harapanti emerges as a pioneering solution in the realm of humanitarianism and s
 ### Orphanage/Nursing Home
 1. Created Job Vacancy List
    <p align="center">
-     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/Screenshot_1705596593.png" width="200">
+     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/info_pelamar.png" width="200">
    </p>
 2 Job Vacancy Applications 
    <p align="center">
@@ -69,15 +69,11 @@ Harapanti emerges as a pioneering solution in the realm of humanitarianism and s
    </p>
 3. Create Job Vacancy
    <p align="center">
-     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/Screenshot_1705596757.png" width="200">
+     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/create_vacan.png" width="200">
    </p>
 4. Edit Nursing Home/Orphanage Information
    <p align="center">
-     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/Screenshot_1705596610.png" width="200">
-   </p>
-5. Orphanage/Nursing Home Detail
-   <p align="center">
-     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/Screenshot_1705596538.png" width="200">
+     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/editpanti.png" width="200">
    </p>
 
 ## 📘How To Use
