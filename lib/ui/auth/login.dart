@@ -65,9 +65,11 @@ class _LoginPageState extends State<LoginPage> {
       }
     }
 
-    setState(() {
-      _isAuthenticating = false;
-    });
+    if (mounted) {
+      setState(() {
+        _isAuthenticating = false;
+      });
+    }
   }
 
   @override

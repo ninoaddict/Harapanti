@@ -560,14 +560,15 @@ class _EditPantiPageState extends State<EditPantiPage> {
   void _onSubmit() async {
     FocusScope.of(context).unfocus();
     try {
-      final pantiName = _pantiNameController.text;
-      bool checkPantiName = pantiName.trim().isEmpty;
+      final pantiName = _pantiNameController.text.trim();
+      bool checkPantiName =
+          pantiName.isEmpty || pantiName == 'Nama Panti Asuhan';
 
-      final address = _addressController.text;
-      bool checkAddress = address.trim().isEmpty;
+      final address = _addressController.text.trim();
+      bool checkAddress = address.isEmpty || address == 'Alamat';
 
-      final city = _cityController.text;
-      bool checkCity = city.trim().isEmpty;
+      final city = _cityController.text.trim();
+      bool checkCity = city.isEmpty || city == 'Kota';
 
       final attendant = int.tryParse(_numberOfAttendantController.text);
       bool checkAttendant = attendant == null || attendant < 0;
@@ -575,20 +576,20 @@ class _EditPantiPageState extends State<EditPantiPage> {
       final resident = int.tryParse(_numberOfResident.text);
       bool checkResident = resident == null || resident < 0;
 
-      final pengelola = _pengelola.text;
-      bool checkPengelola = pengelola.trim().isEmpty;
+      final pengelola = _pengelola.text.trim();
+      bool checkPengelola = pengelola.isEmpty || pengelola == '-';
 
-      final phoneNumber = _phoneNumber.text;
-      bool checkPhoneNumber = phoneNumber.trim().isEmpty;
+      final phoneNumber = _phoneNumber.text.trim();
+      bool checkPhoneNumber = phoneNumber.isEmpty || phoneNumber == '-';
 
       final est = int.tryParse(_est.text);
       bool checkEst = est == null || est < 0;
 
-      final biography = _biography.text;
-      bool checkBio = biography.trim().isEmpty;
+      final biography = _biography.text.trim();
+      bool checkBio = biography.isEmpty || biography == '-';
 
-      final description = _description.text;
-      bool checkDescription = description.trim().isEmpty;
+      final description = _description.text.trim();
+      bool checkDescription = description.isEmpty == '-';
 
       final finalBool = checkPantiName ||
           checkAddress ||

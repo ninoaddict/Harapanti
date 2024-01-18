@@ -27,7 +27,7 @@ class _OpenVacancyListState extends State<OpenVacancyList> {
         ),
       ),
     );
-    widget.onSelectPage(response);
+    if (response != null) widget.onSelectPage(response);
   }
 
   @override

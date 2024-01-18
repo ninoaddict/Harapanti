@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:harapanti/widgets/custom_dropdown.dart';
 import 'package:harapanti/widgets/long_text_field.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:harapanti/widgets/auth_text_field.dart';
 import 'package:intl/intl.dart';
 import 'package:harapanti/widgets/navigation_bar_item.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -178,9 +176,11 @@ class _NewVacancyPageState extends State<NewVacancyPage> {
       }
     }
 
-    setState(() {
-      _isAuthenticating = false;
-    });
+    if (mounted) {
+      setState(() {
+        _isAuthenticating = false;
+      });
+    }
   }
 
   void _presentDatePicker() async {
@@ -216,19 +216,23 @@ class _NewVacancyPageState extends State<NewVacancyPage> {
           InkWell(
             child: SelectedNavigationBarItem(
               barIcon: Icons.work_rounded,
-              barLabel: "Relawan",
+              barLabel: "Lowongan",
               isBarSelected: true,
               lineWidth: 70,
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pop();
+            },
           ),
           InkWell(
             child: SelectedNavigationBarItem(
               barIcon: Icons.home_work_outlined,
-              barLabel: "Daftar Panti",
+              barLabel: "Data Panti",
               isBarSelected: false,
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(context, 1);
+            },
           ),
           InkWell(
             child: SelectedNavigationBarItem(
@@ -236,7 +240,9 @@ class _NewVacancyPageState extends State<NewVacancyPage> {
               barLabel: "Donasi",
               isBarSelected: false,
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(context, 2);
+            },
           ),
         ],
       ),
@@ -283,7 +289,7 @@ class _NewVacancyPageState extends State<NewVacancyPage> {
                       ),
                     ),
                     Text(
-                      'Lengkapi Informasi Pekerjaan',
+                      'Tambah Pekerjaan',
                       style: GoogleFonts.poppins(
                         color: const Color(0xFF5645FF),
                         fontWeight: FontWeight.w700,

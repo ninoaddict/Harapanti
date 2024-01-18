@@ -88,7 +88,7 @@ class _RegisterPageState extends State<RegisterPage> {
             .add(pantiInitialData);
       }
     } on FirebaseAuthException catch (error) {
-      if (context.mounted) {
+      if (mounted) {
         ScaffoldMessenger.of(context).clearSnackBars();
         if (error.code == 'email-already-in-use') {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -107,10 +107,11 @@ class _RegisterPageState extends State<RegisterPage> {
         }
       }
     }
-
-    setState(() {
-      _isAuthenticating = false;
-    });
+    if (mounted) {
+      setState(() {
+        _isAuthenticating = false;
+      });
+    }
   }
 
   @override

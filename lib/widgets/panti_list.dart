@@ -19,7 +19,7 @@ class PantiList extends ConsumerWidget {
         builder: (ctx) => PantiDetailPage(dataPanti: dataPanti),
       ),
     );
-    setPageNumber(response);
+    if (response != null) setPageNumber(response);
   }
 
   @override

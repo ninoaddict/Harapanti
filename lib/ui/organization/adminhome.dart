@@ -19,9 +19,15 @@ class _AdminHomePageState extends State<AdminHomePage> {
 
   late List<Widget> _screenList;
 
-  void _addNewVacancy() {
-    Navigator.of(context)
+  void _addNewVacancy() async {
+    final response = await Navigator.of(context)
         .push(MaterialPageRoute(builder: (ctx) => const NewVacancyPage()));
+
+    if (response != null) {
+      setState(() {
+        _selectedPageIndex = response;
+      });
+    }
   }
 
   late List<Widget?> _fabList;
@@ -114,13 +120,13 @@ class _AdminHomePageState extends State<AdminHomePage> {
             child: _selectedPageIndex == 2
                 ? SelectedNavigationBarItem(
                     barIcon: Icons.handshake_rounded,
-                    barLabel: "Buka Donasi",
+                    barLabel: "Donasi",
                     isBarSelected: true,
                     lineWidth: 85,
                   )
                 : SelectedNavigationBarItem(
                     barIcon: Icons.handshake_outlined,
-                    barLabel: "Buka Donasi",
+                    barLabel: "Donasi",
                     isBarSelected: false,
                   ),
             onTap: () {
@@ -142,10 +148,6 @@ class _AdminHomePageState extends State<AdminHomePage> {
         child: _fabList[_selectedPageIndex],
       ),
       body: _screenList[_selectedPageIndex],
-      // body: IndexedStack(
-      //   index: _selectedPageIndex,
-      //   children: _screenList,
-      // ),
     );
   }
 }

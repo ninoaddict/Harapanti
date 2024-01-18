@@ -187,7 +187,10 @@ class _OpenVacancyDetailPageState extends State<OpenVacancyDetailPage> {
                       padding: EdgeInsets.zero,
                     )
                   ],
-                )
+                ),
+              const SizedBox(
+                height: 10,
+              ),
             ],
           ),
         ),
@@ -317,7 +320,7 @@ class _OpenVacancyDetailPageState extends State<OpenVacancyDetailPage> {
           InkWell(
             child: SelectedNavigationBarItem(
               barIcon: Icons.handshake_outlined,
-              barLabel: "Buka Donasi",
+              barLabel: "Donasi",
               isBarSelected: false,
             ),
             onTap: () {

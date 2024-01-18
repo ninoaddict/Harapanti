@@ -44,7 +44,7 @@ class _VacancyListState extends State<VacancyList> {
             VacancyDetailPage(vacancyData: vacancyData, vacancyID: vacancyID),
       ),
     );
-    widget.setPageNumber(response);
+    if (response != null) widget.setPageNumber(response);
   }
 
   @override
