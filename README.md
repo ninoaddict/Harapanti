@@ -1,7 +1,11 @@
-# Harapanti Prototype
+# Harapanti 
 
-## ✨Overview
-Aplikasi ini dibuat untuk memenuhi tugas _2nd stage hands-on_ dari Hackfest. Aplikasi berikut adalah gambaran secara kasar dari Harapanti. Harapanti sendiri adalah sebuah plaftorm untuk membantu pantia asuhan maupun panti jompo yang mengalami kekurangan dana maupun tenaga kerja. Pada aplikasi ini, saya hanya mengimplementasikan fitur login, register, dan mengisi form pendaftaran tenaga kerja.
+## ✨ Team Description
+We, ardideril, are the team behind Harapanti, a humanitarian app specifically targeted to assist orphanages and nursing homes in Indonesia to gather volunteers and financial support. Our team currently resides in Bandung, as we are part of GDSC Chapter Bandung. Meanwhile, the founding members are consisted of:
+1. Dedy Hofmanindo Saragih (Hustler)
+2. Arvyno Pranata Limahardja (Hustler) 
+3. Adril Putra Merin (Hacker)
+4. Dhidit Abdi Aziz (Hipster)
 
 ## 🔍Features
 1. Login
