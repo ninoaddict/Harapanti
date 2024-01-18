@@ -62,7 +62,8 @@ class _RegisterPageState extends State<RegisterPage> {
           'username': _enteredUsername,
           'email': _enteredEmail,
           'category':
-              accountType == AccountType.personal ? 'personal' : 'organization'
+              accountType == AccountType.personal ? 'personal' : 'organization',
+          'imageUrl': null,
         },
       );
       if (accountType == AccountType.organization) {
@@ -78,6 +79,8 @@ class _RegisterPageState extends State<RegisterPage> {
           'pengelola': '-',
           'est': 1900,
           'userID': userCredentials.user!.uid,
+          'imageUrl': null,
+          'imageList': [],
         };
 
         await FirebaseFirestore.instance

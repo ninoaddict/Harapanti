@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:harapanti/widgets/applicant_card.dart';
+import 'package:harapanti/widgets/error_page.dart';
 import 'package:harapanti/widgets/navigation_bar_item.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -114,12 +115,17 @@ class _OpenVacancyDetailPageState extends State<OpenVacancyDetailPage> {
                       ? const Center(
                           child: Text('Failed to fetch data!'),
                         )
-                      : ApplicantCard(data: _dataLowongan[_selectedPage]),
-              if (!_isError && !_isLoading)
+                      : (_dataLowongan.isNotEmpty
+                          ? ApplicantCard(data: _dataLowongan[_selectedPage])
+                          : const Center(
+                              child: ErrorPage(
+                                  msg: 'Belum ada pendaftar',
+                                  color: Colors.black))),
+              if (!_isError && !_isLoading && _dataLowongan.isNotEmpty)
                 const SizedBox(
                   height: 30,
                 ),
-              if (!_isError && !_isLoading)
+              if (!_isError && !_isLoading && _dataLowongan.isNotEmpty)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -290,7 +296,7 @@ class _OpenVacancyDetailPageState extends State<OpenVacancyDetailPage> {
           InkWell(
             child: SelectedNavigationBarItem(
               barIcon: Icons.work_rounded,
-              barLabel: "Buka Lowongan",
+              barLabel: "Lowongan",
               isBarSelected: true,
               lineWidth: 70,
             ),

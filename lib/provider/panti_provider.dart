@@ -23,7 +23,9 @@ Future<List<Panti>> pantiData(PantiDataRef ref, String cityQuery) async {
               biography: ss.data()['biography'],
               address: ss.data()['address'],
               pengelola: ss.data()['pengelola'],
-              est: ss.data()['est']),
+              est: ss.data()['est'],
+              imageUrl: ss.data()['imageUrl'],
+              imageList: ss.data()['imageList']),
         )
         .toList();
     return resultData;
@@ -44,7 +46,9 @@ Future<List<Panti>> pantiData(PantiDataRef ref, String cityQuery) async {
               biography: ss.data()['biography'],
               address: ss.data()['address'],
               pengelola: ss.data()['pengelola'],
-              est: ss.data()['est']),
+              est: ss.data()['est'],
+              imageUrl: ss.data()['imageUrl'],
+              imageList: ss.data()['imageList']),
         )
         .toList();
     return resultData;
@@ -58,17 +62,18 @@ Future<Panti> singlePanti(SinglePantiRef ref, String pantiID) async {
       .doc(pantiID)
       .get();
   final Panti resultData = Panti(
-    pantiName: pantiResp.data()!['pantiName'],
-    city: pantiResp.data()!['city'],
-    description: pantiResp.data()!['description'],
-    numberOfAttendant: pantiResp.data()!['numberOfAttendant'],
-    numberOfResident: pantiResp.data()!['numberOfResident'],
-    phoneNumber: pantiResp.data()!['phoneNumber'],
-    biography: pantiResp.data()!['biography'],
-    address: pantiResp.data()!['address'],
-    pengelola: pantiResp.data()!['pengelola'],
-    est: pantiResp.data()!['est'],
-  );
+      pantiName: pantiResp.data()!['pantiName'],
+      city: pantiResp.data()!['city'],
+      description: pantiResp.data()!['description'],
+      numberOfAttendant: pantiResp.data()!['numberOfAttendant'],
+      numberOfResident: pantiResp.data()!['numberOfResident'],
+      phoneNumber: pantiResp.data()!['phoneNumber'],
+      biography: pantiResp.data()!['biography'],
+      address: pantiResp.data()!['address'],
+      pengelola: pantiResp.data()!['pengelola'],
+      est: pantiResp.data()!['est'],
+      imageUrl: pantiResp.data()!['imageUrl'],
+      imageList: pantiResp.data()!['imageList']);
   return resultData;
 }
 
@@ -79,16 +84,17 @@ Future<Panti> singlePantiByUser(SinglePantiByUserRef ref, String userID) async {
       .where('userID', isEqualTo: userID)
       .get();
   final Panti resultData = Panti(
-    pantiName: pantiResp.docs[0].data()['pantiName'],
-    city: pantiResp.docs[0].data()['city'],
-    description: pantiResp.docs[0].data()['description'],
-    numberOfAttendant: pantiResp.docs[0].data()['numberOfAttendant'],
-    numberOfResident: pantiResp.docs[0].data()['numberOfResident'],
-    phoneNumber: pantiResp.docs[0].data()['phoneNumber'],
-    biography: pantiResp.docs[0].data()['biography'],
-    address: pantiResp.docs[0].data()['address'],
-    pengelola: pantiResp.docs[0].data()['pengelola'],
-    est: pantiResp.docs[0].data()['est'],
-  );
+      pantiName: pantiResp.docs[0].data()['pantiName'],
+      city: pantiResp.docs[0].data()['city'],
+      description: pantiResp.docs[0].data()['description'],
+      numberOfAttendant: pantiResp.docs[0].data()['numberOfAttendant'],
+      numberOfResident: pantiResp.docs[0].data()['numberOfResident'],
+      phoneNumber: pantiResp.docs[0].data()['phoneNumber'],
+      biography: pantiResp.docs[0].data()['biography'],
+      address: pantiResp.docs[0].data()['address'],
+      pengelola: pantiResp.docs[0].data()['pengelola'],
+      est: pantiResp.docs[0].data()['est'],
+      imageUrl: pantiResp.docs[0].data()['imageUrl'],
+      imageList: pantiResp.docs[0].data()['imageList']);
   return resultData;
 }

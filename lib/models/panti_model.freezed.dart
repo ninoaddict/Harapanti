@@ -26,6 +26,8 @@ mixin _$Panti {
   String get address => throw _privateConstructorUsedError;
   String get pengelola => throw _privateConstructorUsedError;
   int get est => throw _privateConstructorUsedError;
+  String? get imageUrl => throw _privateConstructorUsedError;
+  List<dynamic> get imageList => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $PantiCopyWith<Panti> get copyWith => throw _privateConstructorUsedError;
@@ -46,7 +48,9 @@ abstract class $PantiCopyWith<$Res> {
       String biography,
       String address,
       String pengelola,
-      int est});
+      int est,
+      String? imageUrl,
+      List<dynamic> imageList});
 }
 
 /// @nodoc
@@ -72,6 +76,8 @@ class _$PantiCopyWithImpl<$Res, $Val extends Panti>
     Object? address = null,
     Object? pengelola = null,
     Object? est = null,
+    Object? imageUrl = freezed,
+    Object? imageList = null,
   }) {
     return _then(_value.copyWith(
       pantiName: null == pantiName
@@ -114,6 +120,14 @@ class _$PantiCopyWithImpl<$Res, $Val extends Panti>
           ? _value.est
           : est // ignore: cast_nullable_to_non_nullable
               as int,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageList: null == imageList
+          ? _value.imageList
+          : imageList // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
     ) as $Val);
   }
 }
@@ -135,7 +149,9 @@ abstract class _$$PantiImplCopyWith<$Res> implements $PantiCopyWith<$Res> {
       String biography,
       String address,
       String pengelola,
-      int est});
+      int est,
+      String? imageUrl,
+      List<dynamic> imageList});
 }
 
 /// @nodoc
@@ -159,6 +175,8 @@ class __$$PantiImplCopyWithImpl<$Res>
     Object? address = null,
     Object? pengelola = null,
     Object? est = null,
+    Object? imageUrl = freezed,
+    Object? imageList = null,
   }) {
     return _then(_$PantiImpl(
       pantiName: null == pantiName
@@ -201,6 +219,14 @@ class __$$PantiImplCopyWithImpl<$Res>
           ? _value.est
           : est // ignore: cast_nullable_to_non_nullable
               as int,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageList: null == imageList
+          ? _value._imageList
+          : imageList // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
     ));
   }
 }
@@ -218,7 +244,10 @@ class _$PantiImpl implements _Panti {
       required this.biography,
       required this.address,
       required this.pengelola,
-      required this.est});
+      required this.est,
+      required this.imageUrl,
+      required final List<dynamic> imageList})
+      : _imageList = imageList;
 
   @override
   final String pantiName;
@@ -240,10 +269,19 @@ class _$PantiImpl implements _Panti {
   final String pengelola;
   @override
   final int est;
+  @override
+  final String? imageUrl;
+  final List<dynamic> _imageList;
+  @override
+  List<dynamic> get imageList {
+    if (_imageList is EqualUnmodifiableListView) return _imageList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_imageList);
+  }
 
   @override
   String toString() {
-    return 'Panti(pantiName: $pantiName, city: $city, description: $description, numberOfAttendant: $numberOfAttendant, numberOfResident: $numberOfResident, phoneNumber: $phoneNumber, biography: $biography, address: $address, pengelola: $pengelola, est: $est)';
+    return 'Panti(pantiName: $pantiName, city: $city, description: $description, numberOfAttendant: $numberOfAttendant, numberOfResident: $numberOfResident, phoneNumber: $phoneNumber, biography: $biography, address: $address, pengelola: $pengelola, est: $est, imageUrl: $imageUrl, imageList: $imageList)';
   }
 
   @override
@@ -267,7 +305,11 @@ class _$PantiImpl implements _Panti {
             (identical(other.address, address) || other.address == address) &&
             (identical(other.pengelola, pengelola) ||
                 other.pengelola == pengelola) &&
-            (identical(other.est, est) || other.est == est));
+            (identical(other.est, est) || other.est == est) &&
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl) &&
+            const DeepCollectionEquality()
+                .equals(other._imageList, _imageList));
   }
 
   @override
@@ -282,7 +324,9 @@ class _$PantiImpl implements _Panti {
       biography,
       address,
       pengelola,
-      est);
+      est,
+      imageUrl,
+      const DeepCollectionEquality().hash(_imageList));
 
   @JsonKey(ignore: true)
   @override
@@ -302,7 +346,9 @@ abstract class _Panti implements Panti {
       required final String biography,
       required final String address,
       required final String pengelola,
-      required final int est}) = _$PantiImpl;
+      required final int est,
+      required final String? imageUrl,
+      required final List<dynamic> imageList}) = _$PantiImpl;
 
   @override
   String get pantiName;
@@ -324,6 +370,10 @@ abstract class _Panti implements Panti {
   String get pengelola;
   @override
   int get est;
+  @override
+  String? get imageUrl;
+  @override
+  List<dynamic> get imageList;
   @override
   @JsonKey(ignore: true)
   _$$PantiImplCopyWith<_$PantiImpl> get copyWith =>

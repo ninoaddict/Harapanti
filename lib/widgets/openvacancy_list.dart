@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:harapanti/ui/organization/openvacancy_detail.dart';
+import 'package:harapanti/widgets/error_page.dart';
 import 'package:harapanti/widgets/loading.dart';
 import 'package:harapanti/widgets/openvacancy_item.dart';
 
@@ -28,7 +27,7 @@ class _OpenVacancyListState extends State<OpenVacancyList> {
         ),
       ),
     );
-    widget.onSelectPage(response as int);
+    widget.onSelectPage(response);
   }
 
   @override
@@ -37,12 +36,9 @@ class _OpenVacancyListState extends State<OpenVacancyList> {
       stream: widget.vacancyStream,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return Center(
-            child: Text(
-              'Something went wrong!',
-              style: GoogleFonts.poppins(color: Colors.black),
-            ),
-          );
+          return const Expanded(
+              child: ErrorPage(
+                  msg: 'Unexpected Error Occured', color: Colors.black));
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Expanded(
@@ -50,12 +46,8 @@ class _OpenVacancyListState extends State<OpenVacancyList> {
           );
         }
         if (snapshot.data?.size == 0) {
-          return Center(
-            child: Text(
-              'Belum ada lowongan!',
-              style: GoogleFonts.poppins(color: Colors.black),
-            ),
-          );
+          return const Expanded(
+              child: ErrorPage(msg: 'Belum ada lowongan', color: Colors.black));
         }
         return Expanded(
           child: ListView.builder(

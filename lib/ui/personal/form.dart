@@ -58,6 +58,12 @@ class _FormPageState extends State<FormPage> {
       });
 
       final user = FirebaseAuth.instance.currentUser;
+      final userData = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user!.uid)
+          .get();
+      final userImageUrl = userData.data()!['imageUrl'];
+
       final pantiData = await FirebaseFirestore.instance
           .collection('vacancy')
           .doc(widget.vacancyID)
@@ -89,9 +95,10 @@ class _FormPageState extends State<FormPage> {
         'homeAddress': _homeAddress,
         'vacancyID': widget.vacancyID,
         'pantiID': widget.pantiID,
-        'applicantID': user!.uid,
+        'applicantID': user.uid,
         'createdAt': DateTime.now(),
         'pdfUrl': pdfURL,
+        'imageUrl': userImageUrl
       };
 
       await FirebaseFirestore.instance

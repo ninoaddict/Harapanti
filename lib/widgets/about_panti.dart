@@ -32,9 +32,15 @@ class AboutPanti extends ConsumerWidget {
                 const EdgeInsets.only(top: 12, bottom: 12, left: 12, right: 12),
             child: Row(
               children: [
-                const CircleAvatar(
-                  radius: 28,
-                  backgroundImage: AssetImage('assets/images/dummy.png'),
+                ClipOval(
+                  child: SizedBox.fromSize(
+                      size: const Size.fromRadius(
+                        28,
+                      ), // Image radius
+                      child: Image.network(
+                        dataPanti.imageUrl!,
+                        fit: BoxFit.cover,
+                      )),
                 ),
                 const SizedBox(
                   width: 15,

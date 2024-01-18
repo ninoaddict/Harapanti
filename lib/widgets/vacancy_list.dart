@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:harapanti/ui/personal/vacancy_detail.dart';
+import 'package:harapanti/widgets/error_page.dart';
 import 'package:harapanti/widgets/loading.dart';
 import 'package:harapanti/widgets/vacancy_item.dart';
 
@@ -54,16 +53,18 @@ class _VacancyListState extends State<VacancyList> {
       stream: _pantiStream,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return const Text('Something went wrong!');
+          return const Expanded(
+              child:
+                  ErrorPage(msg: 'Something went wrong', color: Colors.black));
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Expanded(child: LoadingPage());
         }
         if (snapshot.data?.size == 0) {
-          return Center(
-            child: Text(
-              'Belum ada lowongan!',
-              style: GoogleFonts.poppins(),
+          return const Expanded(
+            child: ErrorPage(
+              msg: 'Belum ada lowongan',
+              color: Colors.black,
             ),
           );
         }

@@ -28,9 +28,15 @@ class VacancyItem extends StatelessWidget {
           padding: const EdgeInsets.only(top: 13, bottom: 12, left: 16),
           child: Row(
             children: [
-              const CircleAvatar(
-                radius: 28,
-                backgroundImage: AssetImage('assets/images/dummy.png'),
+              ClipOval(
+                child: SizedBox.fromSize(
+                    size: const Size.fromRadius(
+                      28,
+                    ), // Image radius
+                    child: Image.network(
+                      vacancyData['imageUrl']!,
+                      fit: BoxFit.cover,
+                    )),
               ),
               const SizedBox(
                 width: 15,

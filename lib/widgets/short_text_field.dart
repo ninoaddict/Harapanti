@@ -28,7 +28,7 @@ class ShortTextField extends StatelessWidget {
         contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Color(0xFF8A61FF),
+            color: const Color(0xFF8A61FF),
             width: thickness ?? 1,
           ),
           borderRadius: BorderRadius.circular(10),

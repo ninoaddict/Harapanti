@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harapanti/widgets/auth_text_field.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({super.key});
@@ -19,7 +23,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   late String _fullName;
   late String _emailAdrress;
   late String _accountType;
-
+  String? _previousImage;
+  File? _pickedImage;
   bool _isLoading = true;
 
   // void getUsername() async {
@@ -35,6 +40,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     _fullName = userData.data()!['username'];
     _emailAdrress = userData.data()!['email'];
     _accountType = userData.data()!['category'];
+    _previousImage = userData.data()!['imageUrl'];
 
     setState(
       () {
@@ -59,11 +65,29 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       });
 
       final user = FirebaseAuth.instance.currentUser!.uid;
-      await FirebaseFirestore.instance.collection('users').doc(user).update(
-        {'username': _fullName},
-      );
+
+      if (_pickedImage == null) {
+        await FirebaseFirestore.instance.collection('users').doc(user).update(
+          {'username': _fullName},
+        );
+      } else {
+        final storageRef = FirebaseStorage.instance
+            .ref()
+            .child('user_images')
+            .child('$user.jpg');
+        await storageRef.putFile(_pickedImage!);
+
+        final newImageUrl = await storageRef.getDownloadURL();
+
+        await FirebaseFirestore.instance.collection('users').doc(user).update(
+          {
+            'username': _fullName,
+            'imageUrl': newImageUrl,
+          },
+        );
+      }
     } catch (error) {
-      if (context.mounted) {
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           _getSnackBar('Unexpected', Colors.red, Colors.red, Icons.info),
         );
@@ -79,6 +103,22 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   void initState() {
     super.initState();
     getUserData();
+  }
+
+  void _pickImage() async {
+    final pickedImage = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 60,
+      maxWidth: 150,
+    );
+
+    setState(() {
+      if (pickedImage == null) {
+        _pickedImage = null;
+      } else {
+        _pickedImage = File(pickedImage.path);
+      }
+    });
   }
 
   final Widget _body = const CircularProgressIndicator(
@@ -162,11 +202,43 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Center(
-                                    child: CircleAvatar(
-                                      radius: 50,
-                                      backgroundImage:
-                                          AssetImage('assets/images/dummy.png'),
+                                  Center(
+                                    child: Stack(
+                                      children: [
+                                        InkWell(
+                                          onTap: _pickImage,
+                                          child: ClipOval(
+                                            child: SizedBox.fromSize(
+                                              size: const Size.fromRadius(
+                                                45,
+                                              ), // Image radius
+                                              child: _pickedImage == null
+                                                  ? (_previousImage == null
+                                                      ? Image.asset(
+                                                          'assets/images/profile.png',
+                                                          fit: BoxFit.cover)
+                                                      : Image.network(
+                                                          _previousImage!,
+                                                          fit: BoxFit.cover,
+                                                        ))
+                                                  : Image(
+                                                      image: FileImage(
+                                                          _pickedImage!),
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                            ),
+                                          ),
+                                        ),
+                                        const Positioned(
+                                          bottom: 0,
+                                          right: 0,
+                                          child: Icon(
+                                            Icons.edit,
+                                            color: Color(0xFF8A61FF),
+                                            size: 25,
+                                          ),
+                                        )
+                                      ],
                                     ),
                                   ),
                                   const SizedBox(
@@ -329,7 +401,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     color: const Color(0xff292929),
                   ),
                 ),
-              )
+              ),
+              const SizedBox(
+                height: 20,
+              ),
             ],
           ),
         ),

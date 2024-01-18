@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,6 +11,8 @@ import 'package:harapanti/utils/string_formatting_helper.dart';
 import 'package:harapanti/widgets/loading.dart';
 import 'package:harapanti/widgets/long_text_field.dart';
 import 'package:harapanti/widgets/short_text_field.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
 
 final db = FirebaseFirestore.instance;
 
@@ -35,6 +40,9 @@ class _EditPantiPageState extends State<EditPantiPage> {
   late Panti dataPanti;
   late String _pantiId;
 
+  File? _pickedImage;
+  File? _pickedPantiImage;
+
   void getUsername() async {
     final user = FirebaseAuth.instance.currentUser!;
     final pantiResp = await FirebaseFirestore.instance
@@ -55,6 +63,8 @@ class _EditPantiPageState extends State<EditPantiPage> {
       address: pp['address'],
       pengelola: pp['pengelola'],
       est: pp['est'],
+      imageUrl: pp['imageUrl'],
+      imageList: pp['imageList'],
     );
 
     _pantiNameController.text =
@@ -173,10 +183,42 @@ class _EditPantiPageState extends State<EditPantiPage> {
                             ),
                             child: Row(
                               children: [
-                                const Icon(
-                                  Icons.account_circle,
-                                  color: Colors.black54,
-                                  size: 72,
+                                Stack(
+                                  children: [
+                                    InkWell(
+                                      onTap: _pickImage,
+                                      child: ClipOval(
+                                        child: SizedBox.fromSize(
+                                          size: const Size.fromRadius(
+                                            36,
+                                          ), // Image radius
+                                          child: _pickedImage == null
+                                              ? (dataPanti.imageUrl == null
+                                                  ? Image.asset(
+                                                      'assets/images/profile.png',
+                                                      fit: BoxFit.cover)
+                                                  : Image.network(
+                                                      dataPanti.imageUrl!,
+                                                      fit: BoxFit.cover,
+                                                    ))
+                                              : Image(
+                                                  image:
+                                                      FileImage(_pickedImage!),
+                                                  fit: BoxFit.cover,
+                                                ),
+                                        ),
+                                      ),
+                                    ),
+                                    const Positioned(
+                                      bottom: 0,
+                                      right: 0,
+                                      child: Icon(
+                                        Icons.edit,
+                                        color: Color(0xFF8A61FF),
+                                        size: 25,
+                                      ),
+                                    )
+                                  ],
                                 ),
                                 const SizedBox(
                                   width: 21,
@@ -255,57 +297,75 @@ class _EditPantiPageState extends State<EditPantiPage> {
                         ),
                         Row(
                           children: [
-                            Container(
-                              margin: const EdgeInsets.only(right: 12),
-                              padding: const EdgeInsets.all(0),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: SizedBox(
-                                  child: Image.asset(
-                                    'assets/images/dummy_panti.png',
-                                    fit: BoxFit.cover,
-                                    height: 89,
-                                    width: 142,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(right: 12),
-                              padding: const EdgeInsets.all(0),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 3,
-                                  color: const Color(0xff8A61FF),
-                                ),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: const SizedBox(
-                                  height: 89,
-                                  width: 142,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.add_circle,
-                                        size: 41,
-                                        color: Color(0xFF5645FF),
+                            ...dataPanti.imageList.map((e) => Container(
+                                  margin: const EdgeInsets.only(right: 12),
+                                  padding: const EdgeInsets.all(0),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: SizedBox(
+                                      child: Image.network(
+                                        e,
+                                        fit: BoxFit.cover,
+                                        height: 89,
+                                        width: 142,
                                       ),
-                                      Text(
-                                        'Tambah Foto',
-                                        style: TextStyle(
-                                          color: Color(0xFF5645FF),
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 10,
-                                        ),
-                                      )
-                                    ],
+                                    ),
+                                  ),
+                                )),
+                            if (dataPanti.imageList.length < 2)
+                              InkWell(
+                                onTap: _pickPantiImage,
+                                child: Container(
+                                  margin: const EdgeInsets.only(right: 12),
+                                  padding: const EdgeInsets.all(0),
+                                  decoration: _pickedPantiImage == null
+                                      ? BoxDecoration(
+                                          border: Border.all(
+                                            width: 3,
+                                            color: const Color(0xff8A61FF),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        )
+                                      : null,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: _pickedPantiImage == null
+                                        ? const SizedBox(
+                                            height: 89,
+                                            width: 142,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Icon(
+                                                  Icons.add_circle,
+                                                  size: 41,
+                                                  color: Color(0xFF5645FF),
+                                                ),
+                                                Text(
+                                                  'Tambah Foto',
+                                                  style: TextStyle(
+                                                    color: Color(0xFF5645FF),
+                                                    fontWeight: FontWeight.w700,
+                                                    fontSize: 10,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          )
+                                        : SizedBox(
+                                            child: Image(
+                                              image:
+                                                  FileImage(_pickedPantiImage!),
+                                              fit: BoxFit.cover,
+                                              height: 89,
+                                              width: 142,
+                                            ),
+                                          ),
                                   ),
                                 ),
                               ),
-                            ),
                           ],
                         ),
                         const SizedBox(
@@ -465,6 +525,38 @@ class _EditPantiPageState extends State<EditPantiPage> {
           );
   }
 
+  void _pickPantiImage() async {
+    final pickedImage = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 70,
+      maxWidth: 150,
+    );
+
+    setState(() {
+      if (pickedImage == null) {
+        _pickedPantiImage == null;
+      } else {
+        _pickedPantiImage = File(pickedImage.path);
+      }
+    });
+  }
+
+  void _pickImage() async {
+    final pickedImage = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 60,
+      maxWidth: 150,
+    );
+
+    setState(() {
+      if (pickedImage == null) {
+        _pickedImage = null;
+      } else {
+        _pickedImage = File(pickedImage.path);
+      }
+    });
+  }
+
   void _onSubmit() async {
     FocusScope.of(context).unfocus();
     try {
@@ -509,47 +601,94 @@ class _EditPantiPageState extends State<EditPantiPage> {
           checkBio ||
           checkDescription;
 
-      if (finalBool) {
+      if (finalBool || (dataPanti.imageUrl == null && _pickedImage == null)) {
         ScaffoldMessenger.of(context).showSnackBar(
           _getSnackBar('Kesalahan format pada pengisian data!', Colors.red,
               Colors.red, Icons.info),
         );
         return;
       }
+      String? newImageUrl = dataPanti.imageUrl;
+      String? newPantiImageUrl;
 
-      final Map<String, dynamic> data = {
-        'address': address,
-        'pantiName': pantiName,
-        'city': city,
-        'description': description,
-        'numberOfAttendant': attendant,
-        'numberOfResident': resident,
-        'phoneNumber': phoneNumber,
-        'biography': biography,
-        'pengelola': pengelola,
-        'est': est,
-      };
+      // Map<String, dynamic>? data;
+
+      if (_pickedImage != null) {
+        final storageRef = FirebaseStorage.instance
+            .ref()
+            .child('panti_images')
+            .child(_pantiId)
+            .child('profile.jpg');
+
+        await storageRef.putFile(_pickedImage!);
+
+        newImageUrl = await storageRef.getDownloadURL();
+      }
+
+      if (_pickedPantiImage != null) {
+        const uuid = Uuid();
+        String newFileName = uuid.v4();
+        await FirebaseStorage.instance
+            .ref()
+            .child('panti_image')
+            .child(_pantiId)
+            .child('$newFileName.jpg')
+            .putFile(_pickedPantiImage!);
+        newPantiImageUrl = await FirebaseStorage.instance
+            .ref()
+            .child('panti_image')
+            .child(_pantiId)
+            .child('$newFileName.jpg')
+            .getDownloadURL();
+      }
+
+      Map<String, dynamic>? data;
+
+      if (newPantiImageUrl != null) {
+        data = {
+          'address': address,
+          'pantiName': pantiName,
+          'city': city,
+          'description': description,
+          'numberOfAttendant': attendant,
+          'numberOfResident': resident,
+          'phoneNumber': phoneNumber,
+          'biography': biography,
+          'pengelola': pengelola,
+          'est': est,
+          'imageUrl': newImageUrl,
+          'imageList': FieldValue.arrayUnion([newPantiImageUrl])
+        };
+      } else {
+        data = {
+          'address': address,
+          'pantiName': pantiName,
+          'city': city,
+          'description': description,
+          'numberOfAttendant': attendant,
+          'numberOfResident': resident,
+          'phoneNumber': phoneNumber,
+          'biography': biography,
+          'pengelola': pengelola,
+          'est': est,
+          'imageUrl': newImageUrl,
+        };
+      }
 
       await FirebaseFirestore.instance
           .collection('pantiData')
           .doc(_pantiId)
           .update(data)
-          .onError(
-        (error, stackTrace) {
+          .then(
+        (value) {
           ScaffoldMessenger.of(context).showSnackBar(
-            _getSnackBar('Kesalahan format pada pengisian data!', Colors.red,
-                Colors.red, Icons.info),
+            _getSnackBar('Data berhasil diunggah', Colors.green, Colors.green,
+                Icons.check),
           );
-          return;
         },
-      ).then((value) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          _getSnackBar('Data berhasil diunggah', Colors.green, Colors.green,
-              Icons.check),
-        );
-      });
+      );
     } catch (error) {
-      if (context.mounted) {
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           _getSnackBar('Kesalahan format pada pengisian data!', Colors.red,
               Colors.red, Icons.info),

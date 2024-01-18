@@ -239,15 +239,36 @@ class PantiDetailPage extends StatelessWidget {
                     const SizedBox(
                       height: 4,
                     ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: SizedBox.fromSize(
-                        child: Image.asset(
-                          'assets/images/dummy_panti.png',
-                          height: 90,
+                    Row(
+                      children: [
+                        ...dataPanti.imageList.map(
+                          (e) => Container(
+                            margin: const EdgeInsets.only(right: 12),
+                            padding: const EdgeInsets.all(0),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: SizedBox(
+                                child: Image.network(
+                                  e,
+                                  fit: BoxFit.cover,
+                                  height: 89,
+                                  width: 142,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
+                    // ClipRRect(
+                    //   borderRadius: BorderRadius.circular(20),
+                    //   child: SizedBox.fromSize(
+                    //     child: Image.asset(
+                    //       'assets/images/dummy_panti.png',
+                    //       height: 90,
+                    //     ),
+                    //   ),
+                    // ),
                     const SizedBox(
                       height: 20,
                     ),

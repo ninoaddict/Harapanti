@@ -80,13 +80,13 @@ class _AdminHomePageState extends State<AdminHomePage> {
             child: _selectedPageIndex == 0
                 ? SelectedNavigationBarItem(
                     barIcon: Icons.work_rounded,
-                    barLabel: "Buka Lowongan",
+                    barLabel: "Lowongan",
                     isBarSelected: true,
                     lineWidth: 70,
                   )
                 : SelectedNavigationBarItem(
                     barIcon: Icons.work_outline_outlined,
-                    barLabel: "Buka Lowongan",
+                    barLabel: "Lowongan",
                     isBarSelected: false,
                   ),
             onTap: () {

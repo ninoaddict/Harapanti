@@ -53,6 +53,10 @@ dependencies:
   pdf: ^3.10.7
   file_picker: ^6.1.1
   uuid: ^4.3.3
+  cached_network_image: ^3.3.1
+  dio: ^5.4.0
+  path_provider: ^2.1.2
+  permission_handler: ^11.2.0
 
 dev_dependencies:
   flutter_test:
@@ -87,6 +91,8 @@ flutter:
     - assets/images/logo_harapanti.png
     - assets/images/dummy.png
     - assets/images/dummy_panti.png
+    - assets/images/blank.png
+    - assets/images/profile.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

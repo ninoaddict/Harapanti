@@ -78,7 +78,9 @@ class _VacancyPageState extends State<VacancyPage> {
                             style: GoogleFonts.poppins(
                               color: Theme.of(context).colorScheme.secondary,
                               fontWeight: FontWeight.w600,
-                              fontSize: 20,
+                              fontSize: MediaQuery.of(context).size.width < 360
+                                  ? 18
+                                  : 20,
                             ),
                           ),
                           Text(
@@ -86,7 +88,9 @@ class _VacancyPageState extends State<VacancyPage> {
                             style: GoogleFonts.poppins(
                               color: Theme.of(context).colorScheme.secondary,
                               fontWeight: FontWeight.w700,
-                              fontSize: 20,
+                              fontSize: MediaQuery.of(context).size.width < 360
+                                  ? 18
+                                  : 20,
                             ),
                           ),
                         ],

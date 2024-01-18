@@ -148,7 +148,8 @@ class _NewVacancyPageState extends State<NewVacancyPage> {
         'syarat': enteredSyarat,
         'status': 'ongoing',
         'numberOfApplicant': 0,
-        'pantiName': currPantiData['pantiName']
+        'pantiName': currPantiData['pantiName'],
+        'imageUrl': currPantiData['imageUrl']
       };
 
       await FirebaseFirestore.instance
