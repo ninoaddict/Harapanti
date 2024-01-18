@@ -589,7 +589,7 @@ class _EditPantiPageState extends State<EditPantiPage> {
       bool checkBio = biography.isEmpty || biography == '-';
 
       final description = _description.text.trim();
-      bool checkDescription = description.isEmpty == '-';
+      bool checkDescription = description.isEmpty || description == '-';
 
       final finalBool = checkPantiName ||
           checkAddress ||
