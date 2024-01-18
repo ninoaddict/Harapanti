@@ -1,11 +1,12 @@
+import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:uuid/uuid.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:harapanti/widgets/auth_text_field.dart';
-import 'package:harapanti/widgets/navigation_bar_item.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:file_picker/file_picker.dart';
 
 class FormPage extends StatefulWidget {
   const FormPage({super.key, required this.vacancyID, required this.pantiID});
@@ -20,10 +21,12 @@ class FormPage extends StatefulWidget {
 }
 
 class _FormPageState extends State<FormPage> {
+  File? _pdfFile;
   final _formState = GlobalKey<FormState>();
   String _fullName = '';
   String _emailAddress = '';
   String _homeAddress = '';
+  String? _fileName;
 
   bool _isAuthenticating = false;
   bool _isSubmitted = false;
@@ -33,6 +36,17 @@ class _FormPageState extends State<FormPage> {
     final isValid = _formState.currentState!.validate();
 
     if (!isValid) {
+      return;
+    }
+
+    if (_pdfFile == null) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(_getSnackBar(
+            'No PDF File Uploaded', Colors.red, Colors.red, Icons.info));
+        setState(() {
+          _isAuthenticating = false;
+        });
+      }
       return;
     }
 
@@ -61,6 +75,14 @@ class _FormPageState extends State<FormPage> {
       final int currApplicantNumber =
           pantiData.data()!['numberOfApplicant'] + 1;
 
+      final storageRef = FirebaseStorage.instance
+          .ref()
+          .child('applicant_resume')
+          .child(widget.vacancyID)
+          .child(_fileName!);
+
+      await storageRef.putFile(_pdfFile!);
+      final pdfURL = await storageRef.getDownloadURL();
       final Map<String, dynamic> data = {
         'name': _fullName,
         'email': _emailAddress,
@@ -68,7 +90,8 @@ class _FormPageState extends State<FormPage> {
         'vacancyID': widget.vacancyID,
         'pantiID': widget.pantiID,
         'applicantID': user!.uid,
-        'createdAt': DateTime.now()
+        'createdAt': DateTime.now(),
+        'pdfUrl': pdfURL,
       };
 
       await FirebaseFirestore.instance
@@ -372,7 +395,7 @@ class _FormPageState extends State<FormPage> {
                               height: 4,
                             ),
                             InkWell(
-                              onTap: () {},
+                              onTap: _getPdf,
                               child: Card(
                                 margin: const EdgeInsets.only(
                                   bottom: 12,
@@ -401,7 +424,8 @@ class _FormPageState extends State<FormPage> {
                                         size: 49,
                                       ),
                                       Text(
-                                        'Upload File Resume kesini',
+                                        _fileName ??
+                                            'Upload File Resume kesini',
                                         style: GoogleFonts.poppins(
                                           color: const Color(0xff292929),
                                           fontSize: 14,
@@ -421,5 +445,28 @@ class _FormPageState extends State<FormPage> {
               ),
             ),
     );
+  }
+
+  void _getPdf() async {
+    var uuid = const Uuid();
+
+    String fileName = '${uuid.v4()}.pdf';
+
+    final file = await FilePicker.platform.pickFiles(
+        allowMultiple: false,
+        allowedExtensions: ['pdf'],
+        type: FileType.custom);
+    if (file == null) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(_getSnackBar(
+            "Gagal mengunggah pdf", Colors.red, Colors.red, Icons.info));
+      }
+      return;
+    }
+
+    setState(() {
+      _fileName = fileName;
+      _pdfFile = File(file.files.single.path!);
+    });
   }
 }

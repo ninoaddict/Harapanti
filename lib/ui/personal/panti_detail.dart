@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harapanti/models/panti_model.dart';
-import 'package:harapanti/ui/personal/form.dart';
 import 'package:harapanti/utils/string_formatting_helper.dart';
-import 'package:harapanti/widgets/about_panti.dart';
 import 'package:harapanti/widgets/navigation_bar_item.dart';
 
 class PantiDetailPage extends StatelessWidget {

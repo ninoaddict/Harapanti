@@ -7,10 +7,7 @@ import 'package:harapanti/ui/profile.dart';
 import 'package:harapanti/utils/string_formatting_helper.dart';
 import 'package:harapanti/widgets/loading.dart';
 import 'package:harapanti/widgets/long_text_field.dart';
-import 'package:harapanti/widgets/openvacancy_list.dart';
-import 'package:harapanti/widgets/search_field.dart';
 import 'package:harapanti/widgets/short_text_field.dart';
-import 'package:harapanti/widgets/vacancy_list.dart';
 
 final db = FirebaseFirestore.instance;
 
@@ -25,7 +22,6 @@ class EditPantiPage extends StatefulWidget {
 
 class _EditPantiPageState extends State<EditPantiPage> {
   bool _isLoading = true;
-  bool _isSubmitting = false;
   late TextEditingController _pantiNameController;
   late TextEditingController _addressController;
   late TextEditingController _cityController;

@@ -2,12 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:harapanti/models/panti_model.dart';
 import 'package:harapanti/ui/profile.dart';
 import 'package:harapanti/widgets/loading.dart';
 import 'package:harapanti/widgets/openvacancy_list.dart';
-import 'package:harapanti/widgets/search_field.dart';
-import 'package:harapanti/widgets/vacancy_list.dart';
 
 final db = FirebaseFirestore.instance;
 

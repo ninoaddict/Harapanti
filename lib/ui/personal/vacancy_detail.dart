@@ -4,7 +4,6 @@ import 'package:harapanti/ui/personal/form.dart';
 import 'package:harapanti/utils/string_formatting_helper.dart';
 import 'package:harapanti/widgets/about_panti.dart';
 import 'package:harapanti/widgets/navigation_bar_item.dart';
-import 'package:harapanti/widgets/number_list_item.dart';
 
 class VacancyDetailPage extends StatelessWidget {
   const VacancyDetailPage(
