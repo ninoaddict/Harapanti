@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:harapanti/splash.dart';
 import 'package:harapanti/ui/auth/login.dart';
 import 'package:harapanti/ui/auth/register.dart';
+import 'dart:async';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -13,6 +15,18 @@ class AuthPage extends StatefulWidget {
 
 class _AuthPageState extends State<AuthPage> {
   bool _isLogin = true;
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    Timer(const Duration(seconds: 3), () {
+      setState(() {
+        _isLoading = false;
+      });
+    });
+  }
 
   void toggleScreens() {
     setState(() {
@@ -22,6 +36,10 @@ class _AuthPageState extends State<AuthPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const LoadingSplash();
+    }
+
     if (_isLogin) {
       return LoginPage(showRegisterPage: toggleScreens);
     } else {

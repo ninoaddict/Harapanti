@@ -3,7 +3,6 @@ import 'package:harapanti/ui/construction.dart';
 import 'package:harapanti/ui/organization/edit_panti.dart';
 import 'package:harapanti/ui/organization/new_vacancy.dart';
 import 'package:harapanti/ui/organization/openvacancy.dart';
-import 'package:harapanti/ui/personal/panti.dart';
 import 'package:harapanti/widgets/navigation_bar_item.dart';
 
 class AdminHomePage extends StatefulWidget {
