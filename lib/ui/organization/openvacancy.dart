@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harapanti/models/panti_model.dart';
 import 'package:harapanti/ui/profile.dart';
+import 'package:harapanti/widgets/openvacancy_list.dart';
 import 'package:harapanti/widgets/search_field.dart';
 import 'package:harapanti/widgets/vacancy_list.dart';
 
@@ -23,8 +24,6 @@ class _OpenVacancyPageState extends State<OpenVacancyPage> {
   late String _pantiId;
   String _currStatus = 'all';
   bool _isLoading = true;
-
-  final _dropdownFormKey = GlobalKey<FormState>();
 
   void getUsername() async {
     final user = FirebaseAuth.instance.currentUser!;
@@ -123,6 +122,10 @@ class _OpenVacancyPageState extends State<OpenVacancyPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 12, right: 12),
                         child: DropdownButton(
+                          icon: const Icon(
+                            Icons.arrow_drop_down,
+                            color: Colors.black54,
+                          ),
                           value: _currStatus,
                           items: const [
                             //add items in the dropdown
@@ -161,6 +164,10 @@ class _OpenVacancyPageState extends State<OpenVacancyPage> {
                   ),
                   const SizedBox(
                     height: 20,
+                  ),
+                  OpenVacancyList(
+                    status: _currStatus,
+                    pantiId: _pantiId,
                   ),
                 ],
               ),

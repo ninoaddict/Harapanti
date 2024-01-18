@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:harapanti/ui/organization/new_vacancy.dart';
 import 'package:harapanti/ui/organization/openvacancy.dart';
 import 'package:harapanti/ui/personal/panti.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
@@ -24,10 +25,67 @@ class _AdminHomePageState extends State<AdminHomePage> {
     const VacancyPage(),
   ];
 
+  void _addNewVacancy() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (ctx) => const NewVacancyPage()));
+  }
+
+  late List<Widget> _fabList;
   void onSelectPage(int index) {
     setState(() {
       _selectedPageIndex = index;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fabList = [
+      SizedBox(
+        height: 60,
+        width: 60,
+        child: FloatingActionButton(
+          backgroundColor: const Color(0xFF5645FF),
+          onPressed: _addNewVacancy,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+          child: const Icon(
+            Icons.add,
+            size: 45,
+          ),
+        ),
+      ),
+      SizedBox(
+        height: 60,
+        width: 60,
+        child: FloatingActionButton(
+          elevation: 0,
+          backgroundColor: Colors.white,
+          onPressed: () {},
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+          child: const Icon(
+            Icons.save,
+            size: 60,
+            color: Color(0xFF5645FF),
+          ),
+        ),
+      ),
+      SizedBox(
+        height: 60,
+        width: 60,
+        child: FloatingActionButton(
+          backgroundColor: const Color(0xFF5645FF),
+          onPressed: () {},
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+          child: const Icon(
+            Icons.add,
+            size: 45,
+          ),
+        ),
+      ),
+    ];
   }
 
   Container customNavBar(BuildContext context) {
@@ -103,6 +161,10 @@ class _AdminHomePageState extends State<AdminHomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: customNavBar(context),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 15),
+        child: _fabList[_selectedPageIndex],
+      ),
       body: IndexedStack(
         index: _selectedPageIndex,
         children: _screenList,

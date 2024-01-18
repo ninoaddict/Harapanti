@@ -58,7 +58,6 @@ class PantiDetailPage extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: customNavBar(context),
       backgroundColor: Colors.white,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.zero,
