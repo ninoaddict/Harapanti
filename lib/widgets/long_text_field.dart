@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+// ignore: must_be_immutable
 class LongTextField extends StatelessWidget {
-  const LongTextField(
-      {super.key, required this.controller, required this.height});
+  LongTextField({
+    super.key,
+    required this.controller,
+    required this.height,
+    this.thickness,
+  });
 
   final TextEditingController controller;
   final double height;
+  double? thickness;
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +33,9 @@ class LongTextField extends StatelessWidget {
           contentPadding:
               const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
           enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: Color(0xFF8A61FF),
+            borderSide: BorderSide(
+              color: const Color(0xFF8A61FF),
+              width: thickness ?? 1,
             ),
             borderRadius: BorderRadius.circular(10),
           ),

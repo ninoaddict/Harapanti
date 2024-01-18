@@ -61,31 +61,35 @@ class VacancyDetailPage extends StatelessWidget {
       bottomNavigationBar: customNavBar(context),
       backgroundColor: Colors.white,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: SizedBox(
-        width: MediaQuery.of(context).size.width - 40,
-        height: 52,
-        child: FloatingActionButton(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (ctx) => FormPage(
-                  vacancyID: vacancyID,
-                  pantiID: 'q1231asds123sdsdf' //vacancyData['pantiID'],
-                  ,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 10),
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width - 40,
+          height: 52,
+          child: FloatingActionButton(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (ctx) => FormPage(
+                    vacancyID: vacancyID,
+                    pantiID: 'q1231asds123sdsdf' //vacancyData['pantiID'],
+                    ,
+                  ),
                 ),
+              );
+            },
+            backgroundColor: const Color(0xFFFFE08B),
+            child: Text(
+              'Lamar Sekarang',
+              style: GoogleFonts.poppins(
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                color: const Color(0xff292929),
               ),
-            );
-          },
-          backgroundColor: const Color(0xFFFFE08B),
-          child: Text(
-            'Daftar Sekarang',
-            style: GoogleFonts.poppins(
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              color: const Color(0xff292929),
             ),
           ),
         ),

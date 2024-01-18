@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harapanti/utils/string_formatting_helper.dart';
-import 'package:harapanti/widgets/vacancy_item.dart';
+import 'package:intl/intl.dart';
+
+final formatter = DateFormat.yMd();
 
 class OpenVacancyItem extends StatelessWidget {
   const OpenVacancyItem(
@@ -39,7 +41,7 @@ class OpenVacancyItem extends StatelessWidget {
                   height: 7,
                 ),
                 Text(
-                  '${vacancyData['startDate']} - ${vacancyData['endDate']}',
+                  '${formatter.format(vacancyData['createdAt'].toDate())} - ${formatter.format(vacancyData['endDate'].toDate())}',
                   style: GoogleFonts.poppins(
                       color: Colors.black,
                       fontSize: 10,

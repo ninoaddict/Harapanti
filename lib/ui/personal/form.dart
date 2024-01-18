@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:harapanti/widgets/auth_text_field.dart';
@@ -26,6 +28,7 @@ class _FormPageState extends State<FormPage> {
   bool _isAuthenticating = false;
 
   void _submit() async {
+    FocusScope.of(context).unfocus();
     final isValid = _formState.currentState!.validate();
 
     if (!isValid) {
@@ -39,24 +42,34 @@ class _FormPageState extends State<FormPage> {
         _isAuthenticating = true;
       });
 
+      final user = FirebaseAuth.instance.currentUser;
+
       final Map<String, dynamic> data = {
         'name': _fullName,
         'email': _emailAddress,
         'homeAdress': _homeAddress,
         'vacancyID': widget.vacancyID,
         'pantiID': widget.pantiID,
+        'applicantID': user!.uid
       };
-      final response = await FirebaseFirestore.instance
-          .collection('vacancyApplication')
-          .add(data);
+      await FirebaseFirestore.instance
+          .collection('application')
+          .add(data)
+          .then((value) {
+        ScaffoldMessenger.of(context).showSnackBar(_getSnackBar(
+            'Data berhasil diunggah', Colors.green, Colors.green, Icons.check));
+      }).onError((error, stackTrace) {
+        ScaffoldMessenger.of(context).showSnackBar(_getSnackBar(
+            'Unexpected Error Occured', Colors.red, Colors.red, Icons.info));
+        setState(() {
+          _isAuthenticating = false;
+        });
+        return;
+      });
     } catch (error) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Unexpected error occurs!'),
-            duration: Duration(seconds: 3),
-          ),
-        );
+        ScaffoldMessenger.of(context).showSnackBar(_getSnackBar(
+            'Unexpected Error Occured', Colors.red, Colors.red, Icons.info));
       }
     }
 
@@ -65,69 +78,86 @@ class _FormPageState extends State<FormPage> {
     });
   }
 
-  Container customNavBar(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
+  SnackBar _getSnackBar(
+    String message,
+    Color color,
+    Color borderColor,
+    IconData icon,
+  ) {
+    final snackBar = SnackBar(
+      duration: const Duration(seconds: 3),
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      content: Container(
+        padding: const EdgeInsets.only(left: 9),
+        decoration: BoxDecoration(
+          color: color,
+          border: Border.all(color: borderColor, width: 3),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x19000000),
+              spreadRadius: 2.0,
+              blurRadius: 8.0,
+              offset: Offset(2, 4),
+            )
+          ],
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Row(
+                children: [
+                  Icon(icon, color: Colors.white),
+                  Flexible(
+                    flex: 3,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Text(message,
+                          style: const TextStyle(color: Colors.white)),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            IconButton(
+              padding: EdgeInsets.zero,
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              },
+              icon: const Icon(Icons.close, color: Colors.white),
+            )
+          ],
         ),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          InkWell(
-            child: SelectedNavigationBarItem(
-              barIcon: Icons.work_rounded,
-              barLabel: "Relawan",
-              isBarSelected: true,
-              lineWidth: 70,
-            ),
-            onTap: () {},
-          ),
-          InkWell(
-            child: SelectedNavigationBarItem(
-              barIcon: Icons.home_work_outlined,
-              barLabel: "Daftar Panti",
-              isBarSelected: false,
-            ),
-            onTap: () {},
-          ),
-          InkWell(
-            child: SelectedNavigationBarItem(
-              barIcon: Icons.handshake_outlined,
-              barLabel: "Donasi",
-              isBarSelected: false,
-            ),
-            onTap: () {},
-          ),
-        ],
-      ),
     );
+    return snackBar;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: customNavBar(context),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: SizedBox(
-        width: MediaQuery.of(context).size.width - 40,
-        height: 52,
-        child: FloatingActionButton(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          onPressed: () {},
-          backgroundColor: const Color(0xFFFFE08B),
-          child: Text(
-            'Kirim',
-            style: GoogleFonts.poppins(
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              color: const Color(0xff292929),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 30),
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width - 40,
+          height: 52,
+          child: FloatingActionButton(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            onPressed: _submit,
+            backgroundColor: const Color(0xFFFFE08B),
+            child: Text(
+              'Kirim',
+              style: GoogleFonts.poppins(
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                color: const Color(0xff292929),
+              ),
             ),
           ),
         ),
@@ -170,7 +200,6 @@ class _FormPageState extends State<FormPage> {
                 child: Form(
                   key: _formState,
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -311,17 +340,10 @@ class _FormPageState extends State<FormPage> {
                           ),
                         ),
                       ),
-                      if (_isAuthenticating)
-                        Container(
-                          margin: const EdgeInsets.only(top: 15),
-                          child: const Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        )
                     ],
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

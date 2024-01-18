@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:harapanti/ui/organization/edit_panti.dart';
 import 'package:harapanti/ui/organization/new_vacancy.dart';
 import 'package:harapanti/ui/organization/openvacancy.dart';
 import 'package:harapanti/ui/personal/panti.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:google_fonts/google_fonts.dart';
-import 'package:harapanti/ui/personal/vacancy.dart';
 import 'package:harapanti/widgets/navigation_bar_item.dart';
 
 class AdminHomePage extends StatefulWidget {
@@ -21,8 +19,8 @@ class _AdminHomePageState extends State<AdminHomePage> {
 
   final _screenList = [
     const OpenVacancyPage(),
+    const EditPantiPage(),
     const PantiPage(),
-    const VacancyPage(),
   ];
 
   void _addNewVacancy() {
@@ -30,7 +28,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
         .push(MaterialPageRoute(builder: (ctx) => const NewVacancyPage()));
   }
 
-  late List<Widget> _fabList;
+  late List<Widget?> _fabList;
   void onSelectPage(int index) {
     setState(() {
       _selectedPageIndex = index;
@@ -55,22 +53,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
           ),
         ),
       ),
-      SizedBox(
-        height: 60,
-        width: 60,
-        child: FloatingActionButton(
-          elevation: 0,
-          backgroundColor: Colors.white,
-          onPressed: () {},
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-          child: const Icon(
-            Icons.save,
-            size: 60,
-            color: Color(0xFF5645FF),
-          ),
-        ),
-      ),
+      null,
       SizedBox(
         height: 60,
         width: 60,
@@ -165,10 +148,11 @@ class _AdminHomePageState extends State<AdminHomePage> {
         padding: const EdgeInsets.only(bottom: 15),
         child: _fabList[_selectedPageIndex],
       ),
-      body: IndexedStack(
-        index: _selectedPageIndex,
-        children: _screenList,
-      ),
+      body: _screenList[_selectedPageIndex],
+      // body: IndexedStack(
+      //   index: _selectedPageIndex,
+      //   children: _screenList,
+      // ),
     );
   }
 }

@@ -44,7 +44,12 @@ class _NewVacancyPageState extends State<NewVacancyPage> {
     super.dispose();
   }
 
-  SnackBar _getSnackBar(String message) {
+  SnackBar _getSnackBar(
+    String message,
+    Color color,
+    Color borderColor,
+    IconData icon,
+  ) {
     final snackBar = SnackBar(
       duration: const Duration(seconds: 3),
       backgroundColor: Colors.transparent,
@@ -52,8 +57,8 @@ class _NewVacancyPageState extends State<NewVacancyPage> {
       content: Container(
         padding: const EdgeInsets.only(left: 9),
         decoration: BoxDecoration(
-          color: Colors.redAccent,
-          border: Border.all(color: Colors.red, width: 3),
+          color: color,
+          border: Border.all(color: borderColor, width: 3),
           boxShadow: const [
             BoxShadow(
               color: Color(0x19000000),
@@ -66,24 +71,27 @@ class _NewVacancyPageState extends State<NewVacancyPage> {
         ),
         child: Row(
           children: [
-            const Icon(Icons.info, color: Colors.white),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Text(message, style: const TextStyle(color: Colors.white)),
-            ),
             Expanded(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  IconButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                    },
-                    icon: const Icon(Icons.close, color: Colors.white),
-                  )
+                  Icon(icon, color: Colors.white),
+                  Flexible(
+                    flex: 3,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Text(message,
+                          style: const TextStyle(color: Colors.white)),
+                    ),
+                  ),
                 ],
               ),
+            ),
+            IconButton(
+              padding: EdgeInsets.zero,
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              },
+              icon: const Icon(Icons.close, color: Colors.white),
             )
           ],
         ),
@@ -93,6 +101,7 @@ class _NewVacancyPageState extends State<NewVacancyPage> {
   }
 
   void _submit() async {
+    FocusScope.of(context).unfocus();
     try {
       setState(() {
         _isAuthenticating = true;
@@ -105,8 +114,8 @@ class _NewVacancyPageState extends State<NewVacancyPage> {
           enteredSyarat.isEmpty ||
           enteredSyarat.trim().isEmpty ||
           _endDate == null) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(_getSnackBar('Form Data Not Valid'));
+        ScaffoldMessenger.of(context).showSnackBar(_getSnackBar(
+            'Form Data Not Valid', Colors.red, Colors.red, Icons.info));
         setState(() {
           _isAuthenticating = false;
         });
@@ -121,7 +130,8 @@ class _NewVacancyPageState extends State<NewVacancyPage> {
       final currPantiData = pantiResp.docs[0].data();
       if (currPantiData['pantiName'] == '-' && context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          _getSnackBar('Mohon lengkapi data panti Anda!'),
+          _getSnackBar('Mohon lengkapi data panti Anda!', Colors.red,
+              Colors.red, Icons.info),
         );
         Navigator.of(context).pop();
         return;
@@ -131,14 +141,30 @@ class _NewVacancyPageState extends State<NewVacancyPage> {
         "pantiID": pantiResp.docs[0].id,
         "city": currPantiData['city'],
         'createdAt': DateTime.now(),
+        'endDate': _endDate,
         'jobType': _posisi,
         'rangeType': _rentangWaktu,
         'tanggungjawab': enteredResp,
         'syarat': enteredSyarat,
         'status': 'ongoing',
+        'numberOfApplicant': 0,
+        'pantiName': currPantiData['pantiName']
       };
 
-      await FirebaseFirestore.instance.collection('vacancy').add(data);
+      await FirebaseFirestore.instance
+          .collection('vacancy')
+          .add(data)
+          .then((value) {
+        ScaffoldMessenger.of(context).showSnackBar(_getSnackBar(
+            'Data berhasil diunggah', Colors.green, Colors.green, Icons.check));
+      }).onError((error, stackTrace) {
+        ScaffoldMessenger.of(context).showSnackBar(_getSnackBar(
+            'Gagal mengunggah data', Colors.red, Colors.red, Icons.info));
+        setState(() {
+          _isAuthenticating = false;
+        });
+        return;
+      });
       if (context.mounted) Navigator.of(context).pop();
     } catch (error) {
       if (context.mounted) {

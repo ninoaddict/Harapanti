@@ -24,8 +24,9 @@ class _OpenVacancyPageState extends State<OpenVacancyPage> {
   late String _pantiId;
   String _currStatus = 'all';
   bool _isLoading = true;
+  late Stream<QuerySnapshot> _vacancyStream;
 
-  void getUsername() async {
+  void _getUsername() async {
     final user = FirebaseAuth.instance.currentUser!;
     final pantiResp = await FirebaseFirestore.instance
         .collection('pantiData')
@@ -35,6 +36,21 @@ class _OpenVacancyPageState extends State<OpenVacancyPage> {
     _pantiName = pantiResp.docs[0].data()['pantiName'];
     _pantiId = pantiResp.docs[0].id;
 
+    if (_currStatus == 'all') {
+      _vacancyStream = FirebaseFirestore.instance
+          .collection('vacancy')
+          .orderBy('createdAt', descending: true)
+          .where('pantiID', isEqualTo: _pantiId)
+          .snapshots();
+    } else {
+      _vacancyStream = FirebaseFirestore.instance
+          .collection('vacancy')
+          .orderBy('createdAt', descending: true)
+          .where('pantiID', isEqualTo: _pantiId)
+          .where('status', isEqualTo: _currStatus)
+          .snapshots();
+    }
+
     setState(() {
       _isLoading = false;
     });
@@ -43,7 +59,7 @@ class _OpenVacancyPageState extends State<OpenVacancyPage> {
   @override
   void initState() {
     super.initState();
-    getUsername();
+    _getUsername();
   }
 
   @override
@@ -143,9 +159,34 @@ class _OpenVacancyPageState extends State<OpenVacancyPage> {
                             )
                           ],
                           onChanged: (value) {
-                            setState(() {
-                              _currStatus = value!;
-                            });
+                            setState(
+                              () {
+                                _currStatus = value!;
+                                setState(
+                                  () {
+                                    if (_currStatus == 'all') {
+                                      _vacancyStream = FirebaseFirestore
+                                          .instance
+                                          .collection('vacancy')
+                                          .orderBy('createdAt',
+                                              descending: true)
+                                          .where('pantiID', isEqualTo: _pantiId)
+                                          .snapshots();
+                                    } else {
+                                      _vacancyStream = FirebaseFirestore
+                                          .instance
+                                          .collection('vacancy')
+                                          .orderBy('createdAt',
+                                              descending: true)
+                                          .where('pantiID', isEqualTo: _pantiId)
+                                          .where('status',
+                                              isEqualTo: _currStatus)
+                                          .snapshots();
+                                    }
+                                  },
+                                );
+                              },
+                            );
                           }, //Icon color
                           style: GoogleFonts.poppins(
                             //te
@@ -166,8 +207,7 @@ class _OpenVacancyPageState extends State<OpenVacancyPage> {
                     height: 20,
                   ),
                   OpenVacancyList(
-                    status: _currStatus,
-                    pantiId: _pantiId,
+                    vacancyStream: _vacancyStream,
                   ),
                 ],
               ),

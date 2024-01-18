@@ -64,13 +64,14 @@ class _VacancyListState extends State<VacancyList> {
             padding: EdgeInsets.zero,
             itemCount: snapshot.data!.size,
             itemBuilder: (context, index) {
-              String vacancyID = snapshot.data!.docs[0].id;
+              String vacancyID = snapshot.data!.docs[index].id;
               Map<String, dynamic> data =
                   snapshot.data!.docs[index].data() as Map<String, dynamic>;
               return VacancyItem(
-                  vacancyData: data,
-                  onSelectJob: _selectJob,
-                  vacancyID: vacancyID);
+                vacancyData: data,
+                onSelectJob: _selectJob,
+                vacancyID: vacancyID,
+              );
             },
           ),
         );

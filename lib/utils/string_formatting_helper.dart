@@ -10,6 +10,12 @@ class StringFormattingHelper {
     return words.join(' ');
   }
 
+  static String formatCityName(String s) {
+    String word = s.toLowerCase();
+    List<String> words = word.split(' ');
+    return words.join('_');
+  }
+
   static String capitalizeWords(String s) {
     return s[0].toUpperCase() + s.substring(1);
   }
