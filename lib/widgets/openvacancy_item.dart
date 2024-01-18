@@ -7,16 +7,20 @@ final formatter = DateFormat.yMd();
 
 class OpenVacancyItem extends StatelessWidget {
   const OpenVacancyItem(
-      {super.key, required this.vacancyData, required this.vacancyID});
+      {super.key,
+      required this.vacancyData,
+      required this.vacancyID,
+      required this.onSelectVacancy});
 
   final Map<String, dynamic> vacancyData;
   final String vacancyID;
+  final void Function(BuildContext, String) onSelectVacancy;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       highlightColor: Colors.white12,
       onTap: () {
-        // onSelectJob(vacancyData, vacancyID);
+        onSelectVacancy(context, vacancyID);
       },
       child: SizedBox(
         width: double.infinity,

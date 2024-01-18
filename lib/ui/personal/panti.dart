@@ -8,7 +8,9 @@ import 'package:harapanti/widgets/search_field.dart';
 // import 'package:harapanti/widgets/vacancy_list.dart';
 
 class PantiPage extends StatefulWidget {
-  const PantiPage({super.key});
+  const PantiPage({super.key, required this.setPageNumber});
+
+  final void Function(int) setPageNumber;
 
   @override
   State<PantiPage> createState() {
@@ -96,7 +98,10 @@ class _PantiPageState extends State<PantiPage> {
               height: 16,
             ),
             // const VacancyList(),
-            PantiList(city: _searchText)
+            PantiList(
+              city: _searchText,
+              setPageNumber: widget.setPageNumber,
+            )
           ],
         ),
       ),

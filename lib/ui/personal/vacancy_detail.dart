@@ -32,7 +32,9 @@ class VacancyDetailPage extends StatelessWidget {
               isBarSelected: true,
               lineWidth: 70,
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(context, 0);
+            },
           ),
           InkWell(
             child: SelectedNavigationBarItem(
@@ -40,7 +42,9 @@ class VacancyDetailPage extends StatelessWidget {
               barLabel: "Daftar Panti",
               isBarSelected: false,
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(context, 1);
+            },
           ),
           InkWell(
             child: SelectedNavigationBarItem(
@@ -48,7 +52,9 @@ class VacancyDetailPage extends StatelessWidget {
               barLabel: "Donasi",
               isBarSelected: false,
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(context, 2);
+            },
           ),
         ],
       ),
@@ -76,8 +82,7 @@ class VacancyDetailPage extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (ctx) => FormPage(
                     vacancyID: vacancyID,
-                    pantiID: 'q1231asds123sdsdf' //vacancyData['pantiID'],
-                    ,
+                    pantiID: vacancyData['pantiID'],
                   ),
                 ),
               );
@@ -166,22 +171,17 @@ class VacancyDetailPage extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    const NumberListItem(
-                        textShown:
-                            'Menjadi fasilitator terhadap pendidikan anak-anak panti',
-                        textIndex: 1),
-                    const NumberListItem(
-                        textShown:
-                            'Menjadi mediator apabila anak panti asuhan mengalami konflik dengan pihak lain',
-                        textIndex: 2),
-                    const NumberListItem(
-                        textShown:
-                            'Menjadi konselor atas permasalahan psikis anak-anak panti',
-                        textIndex: 3),
-                    const NumberListItem(
-                        textShown:
-                            'Menjadi perantara antara panti dengan pihak luar khususnya donatur dan pemerintah terkait',
-                        textIndex: 3),
+                    Row(children: [
+                      Flexible(
+                        child: Text(
+                          vacancyData['tanggungjawab'],
+                          style: GoogleFonts.poppins(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ]),
                     const SizedBox(
                       height: 12,
                     ),
@@ -192,14 +192,17 @@ class VacancyDetailPage extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    const NumberListItem(
-                        textShown: 'Lulusan S1 Kesejahteraan Sosial ',
-                        textIndex: 1),
-                    const NumberListItem(
-                        textShown: 'IPK minimal 3,2', textIndex: 2),
-                    const NumberListItem(
-                        textShown: 'Berseda menginap di asrama panti',
-                        textIndex: 3),
+                    Row(children: [
+                      Flexible(
+                        child: Text(
+                          vacancyData['syarat'],
+                          style: GoogleFonts.poppins(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ]),
                     const SizedBox(height: 40),
                     Text(
                       'Tentang Panti',
@@ -212,7 +215,7 @@ class VacancyDetailPage extends StatelessWidget {
                     const SizedBox(
                       height: 12,
                     ),
-                    const AboutPanti(pantiID: 'Q1Nty8IvD7Fik32zVctE'),
+                    AboutPanti(pantiID: vacancyData['pantiID']),
                   ],
                 ),
               ),

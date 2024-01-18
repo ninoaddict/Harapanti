@@ -3,14 +3,20 @@ import 'package:flutter/material.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harapanti/ui/personal/vacancy_detail.dart';
+import 'package:harapanti/widgets/loading.dart';
 import 'package:harapanti/widgets/vacancy_item.dart';
 
 class VacancyList extends StatefulWidget {
-  const VacancyList(
-      {super.key, required this.listJobType, required this.listRangeType});
+  const VacancyList({
+    super.key,
+    required this.listJobType,
+    required this.listRangeType,
+    required this.setPageNumber,
+  });
 
   final List<String> listJobType;
   final List<String> listRangeType;
+  final void Function(int) setPageNumber;
 
   @override
   State<StatefulWidget> createState() {
@@ -32,12 +38,14 @@ class _VacancyListState extends State<VacancyList> {
         .snapshots();
   }
 
-  void _selectJob(Map<String, dynamic> vacancyData, String vacancyID) {
-    Navigator.of(context).push(
+  void _selectJob(Map<String, dynamic> vacancyData, String vacancyID) async {
+    final response = await Navigator.of(context).push(
       MaterialPageRoute(
-          builder: (ctx) => VacancyDetailPage(
-              vacancyData: vacancyData, vacancyID: vacancyID)),
+        builder: (ctx) =>
+            VacancyDetailPage(vacancyData: vacancyData, vacancyID: vacancyID),
+      ),
     );
+    widget.setPageNumber(response);
   }
 
   @override
@@ -49,7 +57,7 @@ class _VacancyListState extends State<VacancyList> {
           return const Text('Something went wrong!');
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return const Expanded(child: LoadingPage());
         }
         if (snapshot.data?.size == 0) {
           return Center(

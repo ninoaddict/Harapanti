@@ -30,7 +30,9 @@ class PantiDetailPage extends StatelessWidget {
               isBarSelected: false,
               lineWidth: 70,
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(context, 0);
+            },
           ),
           InkWell(
             child: SelectedNavigationBarItem(
@@ -38,7 +40,9 @@ class PantiDetailPage extends StatelessWidget {
               barLabel: "Daftar Panti",
               isBarSelected: true,
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(context, 1);
+            },
           ),
           InkWell(
             child: SelectedNavigationBarItem(
@@ -46,7 +50,9 @@ class PantiDetailPage extends StatelessWidget {
               barLabel: "Donasi",
               isBarSelected: false,
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(context, 2);
+            },
           ),
         ],
       ),

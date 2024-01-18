@@ -81,6 +81,8 @@ flutter:
   assets:
     - assets/images/account_profile.png
     - assets/images/filter.svg
+    - assets/images/left.svg
+    - assets/images/right.svg
     - assets/images/dummy.png
     - assets/images/dummy_panti.png
   #   - images/a_dot_ham.jpeg

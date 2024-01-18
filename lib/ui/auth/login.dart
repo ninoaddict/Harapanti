@@ -121,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                         if (value == null ||
                             value.trim().isEmpty ||
                             !value.contains('@')) {
-                          return 'Please provide a valid email adress';
+                          return 'Please provide a valid email address';
                         }
                         return null;
                       },

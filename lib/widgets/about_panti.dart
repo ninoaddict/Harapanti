@@ -67,7 +67,7 @@ class AboutPanti extends ConsumerWidget {
                           fontWeight: FontWeight.w400),
                     ),
                     Text(
-                      'didirikan oleh yayasan azis',
+                      'Dikelola oleh ${dataPanti.pengelola}',
                       style: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: 10,

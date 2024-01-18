@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:harapanti/ui/construction.dart';
 import 'package:harapanti/ui/personal/panti.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:google_fonts/google_fonts.dart';
@@ -17,16 +18,28 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedPageIndex = 0;
 
-  final _screenList = [
-    const VacancyPage(),
-    const PantiPage(),
-    const VacancyPage(),
-  ];
+  late List<Widget> _screenList;
 
-  void onSelectPage(int index) {
-    setState(() {
-      _selectedPageIndex = index;
-    });
+  @override
+  void initState() {
+    super.initState();
+    _screenList = [
+      VacancyPage(
+        setPageNumber: _onSelectPage,
+      ),
+      PantiPage(
+        setPageNumber: _onSelectPage,
+      ),
+      const ConstructionPage(),
+    ];
+  }
+
+  void _onSelectPage(int index) {
+    if (mounted) {
+      setState(() {
+        _selectedPageIndex = index;
+      });
+    }
   }
 
   Container customNavBar(BuildContext context) {
@@ -55,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                     isBarSelected: false,
                   ),
             onTap: () {
-              onSelectPage(0);
+              _onSelectPage(0);
             },
           ),
           InkWell(
@@ -72,7 +85,7 @@ class _HomePageState extends State<HomePage> {
                     isBarSelected: false,
                   ),
             onTap: () {
-              onSelectPage(1);
+              _onSelectPage(1);
             },
           ),
           InkWell(
@@ -89,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                     isBarSelected: false,
                   ),
             onTap: () {
-              onSelectPage(2);
+              _onSelectPage(2);
             },
           ),
         ],
@@ -102,10 +115,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: customNavBar(context),
-      body: IndexedStack(
-        index: _selectedPageIndex,
-        children: _screenList,
-      ),
+      body: _screenList[_selectedPageIndex],
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:harapanti/ui/construction.dart';
 import 'package:harapanti/ui/organization/edit_panti.dart';
 import 'package:harapanti/ui/organization/new_vacancy.dart';
 import 'package:harapanti/ui/organization/openvacancy.dart';
@@ -17,11 +18,7 @@ class AdminHomePage extends StatefulWidget {
 class _AdminHomePageState extends State<AdminHomePage> {
   int _selectedPageIndex = 0;
 
-  final _screenList = [
-    const OpenVacancyPage(),
-    const EditPantiPage(),
-    const PantiPage(),
-  ];
+  late List<Widget> _screenList;
 
   void _addNewVacancy() {
     Navigator.of(context)
@@ -30,14 +27,24 @@ class _AdminHomePageState extends State<AdminHomePage> {
 
   late List<Widget?> _fabList;
   void onSelectPage(int index) {
-    setState(() {
-      _selectedPageIndex = index;
-    });
+    if (mounted) {
+      setState(() {
+        _selectedPageIndex = index;
+      });
+    }
   }
 
   @override
   void initState() {
     super.initState();
+    _screenList = [
+      OpenVacancyPage(
+        onSelectPage: onSelectPage,
+      ),
+      const EditPantiPage(),
+      const ConstructionPage()
+    ];
+
     _fabList = [
       SizedBox(
         height: 60,
@@ -54,20 +61,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
         ),
       ),
       null,
-      SizedBox(
-        height: 60,
-        width: 60,
-        child: FloatingActionButton(
-          backgroundColor: const Color(0xFF5645FF),
-          onPressed: () {},
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-          child: const Icon(
-            Icons.add,
-            size: 45,
-          ),
-        ),
-      ),
+      null
     ];
   }
 

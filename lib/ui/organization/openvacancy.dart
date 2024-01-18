@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harapanti/models/panti_model.dart';
 import 'package:harapanti/ui/profile.dart';
+import 'package:harapanti/widgets/loading.dart';
 import 'package:harapanti/widgets/openvacancy_list.dart';
 import 'package:harapanti/widgets/search_field.dart';
 import 'package:harapanti/widgets/vacancy_list.dart';
@@ -11,7 +12,9 @@ import 'package:harapanti/widgets/vacancy_list.dart';
 final db = FirebaseFirestore.instance;
 
 class OpenVacancyPage extends StatefulWidget {
-  const OpenVacancyPage({super.key});
+  const OpenVacancyPage({super.key, required this.onSelectPage});
+
+  final void Function(int) onSelectPage;
 
   @override
   State<OpenVacancyPage> createState() {
@@ -65,9 +68,7 @@ class _OpenVacancyPageState extends State<OpenVacancyPage> {
   @override
   Widget build(BuildContext context) {
     return _isLoading
-        ? const Center(
-            child: CircularProgressIndicator(),
-          )
+        ? const LoadingPage()
         : SafeArea(
             child: Padding(
               padding: const EdgeInsets.only(
@@ -208,6 +209,7 @@ class _OpenVacancyPageState extends State<OpenVacancyPage> {
                   ),
                   OpenVacancyList(
                     vacancyStream: _vacancyStream,
+                    onSelectPage: widget.onSelectPage,
                   ),
                 ],
               ),

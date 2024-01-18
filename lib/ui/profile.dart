@@ -43,6 +43,38 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     );
   }
 
+  void _onSubmit() async {
+    FocusScope.of(context).unfocus();
+    final isValid = _formState.currentState!.validate();
+
+    if (!isValid) {
+      return;
+    }
+
+    _formState.currentState!.save();
+
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+
+      final user = FirebaseAuth.instance.currentUser!.uid;
+      await FirebaseFirestore.instance.collection('users').doc(user).update(
+        {'username': _fullName},
+      );
+    } catch (error) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          _getSnackBar('Unexpected', Colors.red, Colors.red, Icons.info),
+        );
+      }
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -163,7 +195,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                       }
                                       return null;
                                     },
-                                    onSaved: (value) {},
+                                    onSaved: (value) {
+                                      _fullName = value!;
+                                    },
                                   ),
                                   const SizedBox(
                                     height: 12,
@@ -279,7 +313,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 height: 39,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: _onSubmit,
                 style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFFE08B),
                     shape: RoundedRectangleBorder(
@@ -301,5 +335,61 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         ),
       ),
     );
+  }
+
+  SnackBar _getSnackBar(
+    String message,
+    Color color,
+    Color borderColor,
+    IconData icon,
+  ) {
+    final snackBar = SnackBar(
+      duration: const Duration(seconds: 3),
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      content: Container(
+        padding: const EdgeInsets.only(left: 9),
+        decoration: BoxDecoration(
+          color: color,
+          border: Border.all(color: borderColor, width: 3),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x19000000),
+              spreadRadius: 2.0,
+              blurRadius: 8.0,
+              offset: Offset(2, 4),
+            )
+          ],
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Row(
+                children: [
+                  Icon(icon, color: Colors.white),
+                  Flexible(
+                    flex: 3,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Text(message,
+                          style: const TextStyle(color: Colors.white)),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            IconButton(
+              padding: EdgeInsets.zero,
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              },
+              icon: const Icon(Icons.close, color: Colors.white),
+            )
+          ],
+        ),
+      ),
+    );
+    return snackBar;
   }
 }

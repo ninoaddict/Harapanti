@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:harapanti/models/panti_model.dart';
 import 'package:harapanti/ui/profile.dart';
 import 'package:harapanti/utils/string_formatting_helper.dart';
+import 'package:harapanti/widgets/loading.dart';
 import 'package:harapanti/widgets/long_text_field.dart';
 import 'package:harapanti/widgets/openvacancy_list.dart';
 import 'package:harapanti/widgets/search_field.dart';
@@ -114,9 +115,7 @@ class _EditPantiPageState extends State<EditPantiPage> {
   @override
   Widget build(BuildContext context) {
     return _isLoading
-        ? const Center(
-            child: CircularProgressIndicator(),
-          )
+        ? const LoadingPage()
         : SafeArea(
             child: Stack(
               children: [

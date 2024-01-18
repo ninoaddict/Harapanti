@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:harapanti/provider/user_provider.dart';
 import 'package:harapanti/ui/organization/adminhome.dart';
 import 'package:harapanti/ui/personal/home.dart';
+import 'package:harapanti/widgets/loading.dart';
 
 class IntermedietePage extends ConsumerWidget {
   const IntermedietePage({super.key});
@@ -31,9 +32,7 @@ class IntermedietePage extends ConsumerWidget {
         ),
       _ => const Scaffold(
           backgroundColor: Colors.white,
-          body: Center(
-            child: CircularProgressIndicator(),
-          ),
+          body: LoadingPage(),
         ),
     };
   }
