@@ -7,6 +7,9 @@ We, ardideril, are the team behind Harapanti, a humanitarian app specifically ta
 3. Adril Putra Merin (Hacker)
 4. Dhidit Abdi Aziz (Hipster)
 
+## 🌟Product Description
+Harapanti emerges as a pioneering solution in the realm of humanitarianism and social collaboration, connecting orphanages or elderly care homes with individuals who are determined to volunteer or are actively seeking employment opportunities in institutions requiring additional workforce. This platform delivers an experience that is closer, more personal, and interconnected, aiming to bridge gaps and strengthen the bonds of compassion between those willing to lend a helping hand and the institutions in need.
+
 ## 🔍Features
 1. Login
    <p align="center">
@@ -30,10 +33,19 @@ We, ardideril, are the team behind Harapanti, a humanitarian app specifically ta
    </p>
 
 ## 📘How To Use
-Install aplikasi berikut melalui file .apk yang terdapat pada link berikut
+First, clone this repository:
 ```bash
-https://drive.google.com/drive/folders/1POV7ZsDn9qb9bQ31VZHvntA_pnW-r3dH
+git clone https://github.com/ninoaddict/Harapanti
 ```
 
-## Catatan Tambahan
-Screenshot firebase yang digunakan pada aplikasi ini tersedia pada folder assets/images
+Install all dependencies:
+
+```bash
+flutter pub get
+```
+
+Run your application:
+
+```bash
+flutter run
+```
