@@ -7,7 +7,7 @@ We, ardideril, are the team behind Harapanti, a humanitarian app specifically ta
 3. Adril Putra Merin (Hacker)
 4. Dhidit Abdi Aziz (Hipster)
 
-## 🌟Product Description
+## 🌟 Product Description
 Harapanti emerges as a pioneering solution in the realm of humanitarianism and social collaboration, connecting orphanages or elderly care homes with individuals who are determined to volunteer or are actively seeking employment opportunities in institutions requiring additional workforce. This platform delivers an experience that is closer, more personal, and interconnected, aiming to bridge gaps and strengthen the bonds of compassion between those willing to lend a helping hand and the institutions in need. This product main features are:
 1. Job Oppurtunities\
    This feature provides information about orphanages or nursing homes seeking volunteers or staff in their vicinity. With this feature, users can easily discover opportunities to contribute, either as volunteers or permanent workers,    based on their skills and interests
@@ -18,7 +18,7 @@ Harapanti emerges as a pioneering solution in the realm of humanitarianism and s
 3. Donation\
    This feature enables users to make donations or contributions to selected orphanages or nursing homes in need. With a simple and secure process, users can swiftly provide financial support to institutions that require assistance
 
-## 📘How To Use
+## 📘 How To Use
 First, clone this repository:
 ```bash
 git clone https://github.com/ninoaddict/Harapanti
@@ -44,7 +44,7 @@ You can also download the .apk file from:
 https://drive.google.com/file/d/1RseBlMuHveDYdTIpqceMUky8j0sgsPsj/view?usp=sharing
 ```
 
-## 🔍Features
+## 🔍 Features
 ### General Feature
 1. Landing Page
    <p align="center">
