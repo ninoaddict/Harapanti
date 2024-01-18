@@ -8,28 +8,76 @@ We, ardideril, are the team behind Harapanti, a humanitarian app specifically ta
 4. Dhidit Abdi Aziz (Hipster)
 
 ## 🌟Product Description
-Harapanti emerges as a pioneering solution in the realm of humanitarianism and social collaboration, connecting orphanages or elderly care homes with individuals who are determined to volunteer or are actively seeking employment opportunities in institutions requiring additional workforce. This platform delivers an experience that is closer, more personal, and interconnected, aiming to bridge gaps and strengthen the bonds of compassion between those willing to lend a helping hand and the institutions in need.
+Harapanti emerges as a pioneering solution in the realm of humanitarianism and social collaboration, connecting orphanages or elderly care homes with individuals who are determined to volunteer or are actively seeking employment opportunities in institutions requiring additional workforce. This platform delivers an experience that is closer, more personal, and interconnected, aiming to bridge gaps and strengthen the bonds of compassion between those willing to lend a helping hand and the institutions in need. This product main features are:
+1. Job Oppurtunities
+   This feature provides information about orphanages or nursing homes seeking volunteers or staff in their vicinity. With this feature, users can easily discover opportunities to contribute, either as volunteers or permanent workers,    based on their skills and interests
+
+2. Institution Data
+   This feature presents detailed information about various institutions in the user's vicinity. By accessing institution data, users can gain profound insights into the goals, activities, and specific needs of each institution, aiding them in making more informed decisions regarding participation or targeted support
+
+3. Donation
+   This feature enables users to make donations or contributions to selected orphanages or nursing homes in need. With a simple and secure process, users can swiftly provide financial support to institutions that require assistance
 
 ## 🔍Features
-1. Login
+### General Feature
+1. Landing Page
    <p align="center">
-     <img src="https://github.com/ninoaddict/Harapanti_2nd_Stage/blob/master/assets/images/photo_2024-01-12_23-40-29.jpg" width="200">
+     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/Screenshot_1705596507.png" width="200">
    </p>
-2. Register
+2. Login
    <p align="center">
-     <img src="https://github.com/ninoaddict/Harapanti_2nd_Stage/blob/master/assets/images/photo_2024-01-12_23-40-34.jpg" width="200">
+     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/Screenshot_1705596513.png" width="200">
    </p>
-3. Job Offer List
+3. Register
    <p align="center">
-     <img src="https://github.com/ninoaddict/Harapanti_2nd_Stage/blob/master/assets/images/photo_2024-01-12_23-40-36.jpg" width="200">
+     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/Screenshot_1705596516.png" width="200">
    </p>
-4 Job Offer Detail
+4. Profile
    <p align="center">
-     <img src="https://github.com/ninoaddict/Harapanti_2nd_Stage/blob/master/assets/images/photo_2024-01-12_23-40-37.jpg" width="200">
+     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/Screenshot_1705596578.png" width="200">
    </p>
-5. Job Offer Form
+### Personal User
+1. Job Vacancy List
    <p align="center">
-     <img src="https://github.com/ninoaddict/Harapanti_2nd_Stage/blob/master/assets/images/photo_2024-01-12_23-40-39.jpg" width="200">
+     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/Screenshot_1705596529.png" width="200">
+   </p>
+2 Job Vacancy Detail
+   <p align="center">
+     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/Screenshot_1705596530.png" width="200">
+   </p>
+3. Job Vacancy Form
+   <p align="center">
+     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/Screenshot_1705596532.png" width="200">
+   </p>
+4. Orphanage/Nursing Home List
+   <p align="center">
+     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/Screenshot_1705596536.png" width="200">
+   </p>
+5. Orphanage/Nursing Home Detail
+   <p align="center">
+     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/Screenshot_1705596538.png" width="200">
+   </p>
+   
+### Orphanage/Nursing Home
+1. Created Job Vacancy List
+   <p align="center">
+     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/Screenshot_1705596593.png" width="200">
+   </p>
+2 Job Vacancy Applications 
+   <p align="center">
+     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/Screenshot_1705596597.png" width="200">
+   </p>
+3. Create Job Vacancy
+   <p align="center">
+     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/Screenshot_1705596757.png" width="200">
+   </p>
+4. Edit Nursing Home/Orphanage Information
+   <p align="center">
+     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/Screenshot_1705596610.png" width="200">
+   </p>
+5. Orphanage/Nursing Home Detail
+   <p align="center">
+     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/Screenshot_1705596538.png" width="200">
    </p>
 
 ## 📘How To Use
@@ -49,3 +97,8 @@ Run your application:
 ```bash
 flutter run
 ```
+Or if you want to run the release version:
+```bash
+flutter run --release
+```
+
