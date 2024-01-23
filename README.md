@@ -7,18 +7,44 @@ We, ardideril, are the team behind Harapanti, a humanitarian app specifically ta
 3. Adril Putra Merin (Hacker)
 4. Dhidit Abdi Aziz (Hipster)
 
-## 🌟Product Description
+## 🌟 Product Description
 Harapanti emerges as a pioneering solution in the realm of humanitarianism and social collaboration, connecting orphanages or elderly care homes with individuals who are determined to volunteer or are actively seeking employment opportunities in institutions requiring additional workforce. This platform delivers an experience that is closer, more personal, and interconnected, aiming to bridge gaps and strengthen the bonds of compassion between those willing to lend a helping hand and the institutions in need. This product main features are:
-1. Job Oppurtunities
+1. Job Oppurtunities\
    This feature provides information about orphanages or nursing homes seeking volunteers or staff in their vicinity. With this feature, users can easily discover opportunities to contribute, either as volunteers or permanent workers,    based on their skills and interests
 
-2. Institution Data
+2. Institution Data\
    This feature presents detailed information about various institutions in the user's vicinity. By accessing institution data, users can gain profound insights into the goals, activities, and specific needs of each institution, aiding them in making more informed decisions regarding participation or targeted support
 
-3. Donation
+3. Donation\
    This feature enables users to make donations or contributions to selected orphanages or nursing homes in need. With a simple and secure process, users can swiftly provide financial support to institutions that require assistance
 
-## 🔍Features
+## 📘 How To Use
+First, clone this repository:
+```bash
+git clone https://github.com/ninoaddict/Harapanti
+```
+
+Install all dependencies:
+
+```bash
+flutter pub get
+```
+
+Run your application:
+
+```bash
+flutter run
+```
+Or, if you want to run the release version:
+```bash
+flutter run --release
+```
+You can also download the .apk file from:
+```bash
+https://drive.google.com/file/d/1RseBlMuHveDYdTIpqceMUky8j0sgsPsj/view?usp=sharing
+```
+
+## 🔍 Features
 ### General Feature
 1. Landing Page
    <p align="center">
@@ -61,7 +87,7 @@ Harapanti emerges as a pioneering solution in the realm of humanitarianism and s
 ### Orphanage/Nursing Home
 1. Created Job Vacancy List
    <p align="center">
-     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/Screenshot_1705596593.png" width="200">
+     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/info_pelamar.png" width="200">
    </p>
 2 Job Vacancy Applications 
    <p align="center">
@@ -69,36 +95,9 @@ Harapanti emerges as a pioneering solution in the realm of humanitarianism and s
    </p>
 3. Create Job Vacancy
    <p align="center">
-     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/Screenshot_1705596757.png" width="200">
+     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/create_vacan.png" width="200">
    </p>
 4. Edit Nursing Home/Orphanage Information
    <p align="center">
-     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/Screenshot_1705596610.png" width="200">
+     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/editpanti.png" width="200">
    </p>
-5. Orphanage/Nursing Home Detail
-   <p align="center">
-     <img src="https://github.com/ninoaddict/Harapanti/blob/master/assets/images/Screenshot_1705596538.png" width="200">
-   </p>
-
-## 📘How To Use
-First, clone this repository:
-```bash
-git clone https://github.com/ninoaddict/Harapanti
-```
-
-Install all dependencies:
-
-```bash
-flutter pub get
-```
-
-Run your application:
-
-```bash
-flutter run
-```
-Or if you want to run the release version:
-```bash
-flutter run --release
-```
-
