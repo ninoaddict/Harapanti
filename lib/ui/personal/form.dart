@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:harapanti/ui/successful.dart';
 import 'package:uuid/uuid.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -29,7 +30,7 @@ class _FormPageState extends State<FormPage> {
   String? _fileName;
 
   bool _isAuthenticating = false;
-  bool _isSubmitted = false;
+  // bool _isSubmitted = false;
 
   void _submit() async {
     FocusScope.of(context).unfocus();
@@ -108,18 +109,22 @@ class _FormPageState extends State<FormPage> {
 
       await FirebaseFirestore.instance.collection('application').add(data);
       setState(() {
-        _isSubmitted = true;
+        _isAuthenticating = false;
       });
+      if (mounted) {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (ctx) =>
+                const SuccessfulPage(msg: 'Lamaranmu berhasil dikirm')));
+      }
     } catch (error) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(_getSnackBar(
-            'Unexpected Error Occured', Colors.red, Colors.red, Icons.info));
+            'Unexpected error Occured', Colors.red, Colors.red, Icons.info));
       }
+      setState(() {
+        _isAuthenticating = false;
+      });
     }
-
-    setState(() {
-      _isAuthenticating = false;
-    });
   }
 
   SnackBar _getSnackBar(
@@ -178,66 +183,18 @@ class _FormPageState extends State<FormPage> {
     return snackBar;
   }
 
-  final Widget _submittedPage = Center(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Container(
-          height: 96,
-          width: 312,
-          alignment: Alignment.center,
-          child: Text(
-            'Lamaranmu berhasil terkirim!',
-            style: GoogleFonts.poppins(
-                color: const Color(0xFF5645FF),
-                fontSize: 32,
-                fontWeight: FontWeight.w700),
-            textAlign: TextAlign.center,
-          ),
-        ),
-        const SizedBox(
-          height: 32,
-        ),
-        const Icon(
-          Icons.done_outline,
-          color: Color(0xFF5645FF),
-          size: 93,
-        )
-      ],
-    ),
-  );
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: _isSubmitted
+      floatingActionButton: _isAuthenticating
           ? Padding(
               padding: const EdgeInsets.only(bottom: 30),
               child: SizedBox(
-                width: MediaQuery.of(context).size.width - 40,
-                height: 60,
-                child: FloatingActionButton(
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  backgroundColor: const Color(0xFFFFE08B),
-                  child: Text(
-                    'Kembali ke awal',
-                    style: GoogleFonts.poppins(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: const Color(0xff292929),
-                    ),
-                  ),
-                ),
-              ),
+                  width: MediaQuery.of(context).size.width - 40,
+                  height: 52,
+                  child: const Center(child: CircularProgressIndicator())),
             )
           : Padding(
               padding: const EdgeInsets.only(bottom: 30),
@@ -262,195 +219,192 @@ class _FormPageState extends State<FormPage> {
                 ),
               ),
             ),
-      body: _isSubmitted
-          ? _submittedPage
-          : SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: const EdgeInsets.only(
+                    top: 31, left: 7, right: 7, bottom: 31),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.only(
-                          top: 31, left: 7, right: 7, bottom: 31),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          IconButton(
-                            padding: EdgeInsets.zero,
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            icon: const Icon(
-                              Icons.navigate_before,
-                              color: Color(0xFF8A61FF),
-                              size: 50,
-                            ),
-                          ),
-                          Text(
-                            'Lengkapi Data Lamaran',
-                            style: GoogleFonts.poppins(
-                              color: const Color(0xFF5645FF),
-                              fontWeight: FontWeight.w700,
-                              fontSize: 21,
-                            ),
-                          ),
-                        ],
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      icon: const Icon(
+                        Icons.navigate_before,
+                        color: Color(0xFF8A61FF),
+                        size: 50,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20, right: 20),
-                      child: Form(
-                        key: _formState,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Nama Lengkap',
-                              style: GoogleFonts.poppins(
-                                color: Theme.of(context).colorScheme.tertiary,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 4,
-                            ),
-                            AuthTextField(
-                              obscureText: null,
-                              hintText: 'John Doe',
-                              tipeInput: TextInputType.name,
-                              validator: (value) {
-                                if (value == null || value.trim().isEmpty) {
-                                  return 'Please provide a valid full name';
-                                }
-                                return null;
-                              },
-                              onSaved: (value) {
-                                _fullName = value!;
-                              },
-                            ),
-                            const SizedBox(
-                              height: 12,
-                            ),
-                            Text(
-                              'Alamat Email',
-                              style: GoogleFonts.poppins(
-                                color: Theme.of(context).colorScheme.tertiary,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 4,
-                            ),
-                            AuthTextField(
-                              obscureText: null,
-                              hintText: 'johndoe@gmail.com',
-                              tipeInput: TextInputType.emailAddress,
-                              validator: (value) {
-                                if (value == null ||
-                                    value.trim().isEmpty ||
-                                    !value.contains('@')) {
-                                  return 'Please provide a valid email';
-                                }
-                                return null;
-                              },
-                              onSaved: (value) {
-                                _emailAddress = value!;
-                              },
-                            ),
-                            const SizedBox(
-                              height: 12,
-                            ),
-                            Text(
-                              'Alamat Rumah',
-                              style: GoogleFonts.poppins(
-                                color: Theme.of(context).colorScheme.tertiary,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 4,
-                            ),
-                            AuthTextField(
-                              obscureText: null,
-                              hintText: 'Jl. Orchard No. 35',
-                              tipeInput: TextInputType.name,
-                              validator: (value) {
-                                if (value == null || value.trim().isEmpty) {
-                                  return 'Please provide a valid home address';
-                                }
-                                return null;
-                              },
-                              onSaved: (value) {
-                                _homeAddress = value!;
-                              },
-                            ),
-                            const SizedBox(
-                              height: 12,
-                            ),
-                            Text(
-                              'Upload Resume',
-                              style: GoogleFonts.poppins(
-                                color: Theme.of(context).colorScheme.tertiary,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 4,
-                            ),
-                            InkWell(
-                              onTap: _getPdf,
-                              child: Card(
-                                margin: const EdgeInsets.only(
-                                  bottom: 12,
-                                  top: 0,
-                                  left: 0,
-                                  right: 0,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  side: const BorderSide(
-                                    color: Color(0xFF8A61FF),
-                                  ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                color: Colors.white,
-                                shadowColor: Colors.white,
-                                surfaceTintColor: Colors.white,
-                                child: SizedBox(
-                                  height: 112,
-                                  width: double.infinity,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Icon(
-                                        Icons.upload,
-                                        color: Color(0xFF8A61FF),
-                                        size: 49,
-                                      ),
-                                      Text(
-                                        _fileName ??
-                                            'Upload File Resume kesini',
-                                        style: GoogleFonts.poppins(
-                                          color: const Color(0xff292929),
-                                          fontSize: 14,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                    Text(
+                      'Lengkapi Data Lamaran',
+                      style: GoogleFonts.poppins(
+                        color: const Color(0xFF5645FF),
+                        fontWeight: FontWeight.w700,
+                        fontSize: 21,
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: Form(
+                  key: _formState,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Nama Lengkap',
+                        style: GoogleFonts.poppins(
+                          color: Theme.of(context).colorScheme.tertiary,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      AuthTextField(
+                        obscureText: null,
+                        hintText: 'John Doe',
+                        tipeInput: TextInputType.name,
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return 'Please provide a valid full name';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          _fullName = value!;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Text(
+                        'Alamat Email',
+                        style: GoogleFonts.poppins(
+                          color: Theme.of(context).colorScheme.tertiary,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      AuthTextField(
+                        obscureText: null,
+                        hintText: 'johndoe@gmail.com',
+                        tipeInput: TextInputType.emailAddress,
+                        validator: (value) {
+                          if (value == null ||
+                              value.trim().isEmpty ||
+                              !value.contains('@')) {
+                            return 'Please provide a valid email';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          _emailAddress = value!;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Text(
+                        'Alamat Rumah',
+                        style: GoogleFonts.poppins(
+                          color: Theme.of(context).colorScheme.tertiary,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      AuthTextField(
+                        obscureText: null,
+                        hintText: 'Jl. Orchard No. 35',
+                        tipeInput: TextInputType.name,
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return 'Please provide a valid home address';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          _homeAddress = value!;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Text(
+                        'Upload Resume',
+                        style: GoogleFonts.poppins(
+                          color: Theme.of(context).colorScheme.tertiary,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      InkWell(
+                        onTap: _getPdf,
+                        child: Card(
+                          margin: const EdgeInsets.only(
+                            bottom: 12,
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            side: const BorderSide(
+                              color: Color(0xFF8A61FF),
+                            ),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          color: Colors.white,
+                          shadowColor: Colors.white,
+                          surfaceTintColor: Colors.white,
+                          child: SizedBox(
+                            height: 112,
+                            width: double.infinity,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.upload,
+                                  color: Color(0xFF8A61FF),
+                                  size: 49,
+                                ),
+                                Text(
+                                  _fileName ?? 'Upload File Resume kesini',
+                                  style: GoogleFonts.poppins(
+                                    color: const Color(0xff292929),
+                                    fontSize: 14,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 

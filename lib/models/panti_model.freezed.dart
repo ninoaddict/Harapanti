@@ -28,6 +28,7 @@ mixin _$Panti {
   int get est => throw _privateConstructorUsedError;
   String? get imageUrl => throw _privateConstructorUsedError;
   List<dynamic> get imageList => throw _privateConstructorUsedError;
+  String get pantiID => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $PantiCopyWith<Panti> get copyWith => throw _privateConstructorUsedError;
@@ -50,7 +51,8 @@ abstract class $PantiCopyWith<$Res> {
       String pengelola,
       int est,
       String? imageUrl,
-      List<dynamic> imageList});
+      List<dynamic> imageList,
+      String pantiID});
 }
 
 /// @nodoc
@@ -78,6 +80,7 @@ class _$PantiCopyWithImpl<$Res, $Val extends Panti>
     Object? est = null,
     Object? imageUrl = freezed,
     Object? imageList = null,
+    Object? pantiID = null,
   }) {
     return _then(_value.copyWith(
       pantiName: null == pantiName
@@ -128,6 +131,10 @@ class _$PantiCopyWithImpl<$Res, $Val extends Panti>
           ? _value.imageList
           : imageList // ignore: cast_nullable_to_non_nullable
               as List<dynamic>,
+      pantiID: null == pantiID
+          ? _value.pantiID
+          : pantiID // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -151,7 +158,8 @@ abstract class _$$PantiImplCopyWith<$Res> implements $PantiCopyWith<$Res> {
       String pengelola,
       int est,
       String? imageUrl,
-      List<dynamic> imageList});
+      List<dynamic> imageList,
+      String pantiID});
 }
 
 /// @nodoc
@@ -177,6 +185,7 @@ class __$$PantiImplCopyWithImpl<$Res>
     Object? est = null,
     Object? imageUrl = freezed,
     Object? imageList = null,
+    Object? pantiID = null,
   }) {
     return _then(_$PantiImpl(
       pantiName: null == pantiName
@@ -227,6 +236,10 @@ class __$$PantiImplCopyWithImpl<$Res>
           ? _value._imageList
           : imageList // ignore: cast_nullable_to_non_nullable
               as List<dynamic>,
+      pantiID: null == pantiID
+          ? _value.pantiID
+          : pantiID // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -246,7 +259,8 @@ class _$PantiImpl implements _Panti {
       required this.pengelola,
       required this.est,
       required this.imageUrl,
-      required final List<dynamic> imageList})
+      required final List<dynamic> imageList,
+      required this.pantiID})
       : _imageList = imageList;
 
   @override
@@ -280,8 +294,11 @@ class _$PantiImpl implements _Panti {
   }
 
   @override
+  final String pantiID;
+
+  @override
   String toString() {
-    return 'Panti(pantiName: $pantiName, city: $city, description: $description, numberOfAttendant: $numberOfAttendant, numberOfResident: $numberOfResident, phoneNumber: $phoneNumber, biography: $biography, address: $address, pengelola: $pengelola, est: $est, imageUrl: $imageUrl, imageList: $imageList)';
+    return 'Panti(pantiName: $pantiName, city: $city, description: $description, numberOfAttendant: $numberOfAttendant, numberOfResident: $numberOfResident, phoneNumber: $phoneNumber, biography: $biography, address: $address, pengelola: $pengelola, est: $est, imageUrl: $imageUrl, imageList: $imageList, pantiID: $pantiID)';
   }
 
   @override
@@ -309,7 +326,8 @@ class _$PantiImpl implements _Panti {
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
             const DeepCollectionEquality()
-                .equals(other._imageList, _imageList));
+                .equals(other._imageList, _imageList) &&
+            (identical(other.pantiID, pantiID) || other.pantiID == pantiID));
   }
 
   @override
@@ -326,7 +344,8 @@ class _$PantiImpl implements _Panti {
       pengelola,
       est,
       imageUrl,
-      const DeepCollectionEquality().hash(_imageList));
+      const DeepCollectionEquality().hash(_imageList),
+      pantiID);
 
   @JsonKey(ignore: true)
   @override
@@ -348,7 +367,8 @@ abstract class _Panti implements Panti {
       required final String pengelola,
       required final int est,
       required final String? imageUrl,
-      required final List<dynamic> imageList}) = _$PantiImpl;
+      required final List<dynamic> imageList,
+      required final String pantiID}) = _$PantiImpl;
 
   @override
   String get pantiName;
@@ -374,6 +394,8 @@ abstract class _Panti implements Panti {
   String? get imageUrl;
   @override
   List<dynamic> get imageList;
+  @override
+  String get pantiID;
   @override
   @JsonKey(ignore: true)
   _$$PantiImplCopyWith<_$PantiImpl> get copyWith =>

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:harapanti/models/vacancy_model.dart';
 import 'package:harapanti/utils/string_formatting_helper.dart';
 import 'package:intl/intl.dart';
 
@@ -7,20 +8,17 @@ final formatter = DateFormat.yMd();
 
 class OpenVacancyItem extends StatelessWidget {
   const OpenVacancyItem(
-      {super.key,
-      required this.vacancyData,
-      required this.vacancyID,
-      required this.onSelectVacancy});
+      {super.key, required this.vacancyData, required this.onSelectVacancy});
 
-  final Map<String, dynamic> vacancyData;
-  final String vacancyID;
+  final Vacancy vacancyData;
+
   final void Function(BuildContext, String) onSelectVacancy;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       highlightColor: Colors.white12,
       onTap: () {
-        onSelectVacancy(context, vacancyID);
+        onSelectVacancy(context, vacancyData.vacancyID);
       },
       child: SizedBox(
         width: double.infinity,
@@ -35,7 +33,7 @@ class OpenVacancyItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${StringFormattingHelper.trimAndCapitalizeWords(vacancyData['jobType'])} ${StringFormattingHelper.capitalizeWords(vacancyData['rangeType'])}',
+                  '${StringFormattingHelper.trimAndCapitalizeWords(vacancyData.jobType)} ${StringFormattingHelper.capitalizeWords(vacancyData.rangeType)}',
                   style: GoogleFonts.poppins(
                       color: Colors.black,
                       fontSize: 14,
@@ -45,7 +43,7 @@ class OpenVacancyItem extends StatelessWidget {
                   height: 7,
                 ),
                 Text(
-                  '${formatter.format(vacancyData['createdAt'].toDate())} - ${formatter.format(vacancyData['endDate'].toDate())}',
+                  '${formatter.format(vacancyData.createdAt)} - ${formatter.format(vacancyData.endDate)}',
                   style: GoogleFonts.poppins(
                       color: Colors.black,
                       fontSize: 10,
@@ -55,7 +53,7 @@ class OpenVacancyItem extends StatelessWidget {
                   height: 7,
                 ),
                 Text(
-                  'Pendaftar ${vacancyData['numberOfApplicant']}',
+                  'Pendaftar ${vacancyData.numberOfApplicant}',
                   style: GoogleFonts.poppins(
                       color: Colors.black,
                       fontSize: 10,

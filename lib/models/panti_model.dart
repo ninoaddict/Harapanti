@@ -15,5 +15,6 @@ class Panti with _$Panti {
       required String pengelola,
       required int est,
       required String? imageUrl,
-      required List<dynamic> imageList}) = _Panti;
+      required List<dynamic> imageList,
+      required String pantiID}) = _Panti;
 }

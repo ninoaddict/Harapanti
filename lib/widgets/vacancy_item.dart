@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:harapanti/models/vacancy_model.dart';
 import 'package:harapanti/utils/string_formatting_helper.dart';
 
 class VacancyItem extends StatelessWidget {
-  const VacancyItem(
-      {super.key,
-      required this.vacancyData,
-      required this.onSelectJob,
-      required this.vacancyID});
+  const VacancyItem({
+    super.key,
+    required this.vacancyData,
+    required this.onSelectJob,
+  });
 
-  final Map<String, dynamic> vacancyData;
-  final String vacancyID;
-  final void Function(Map<String, dynamic> vacancyData, String vacancyID)
-      onSelectJob;
+  final Vacancy vacancyData;
+  final void Function(Vacancy vacancyData, BuildContext context) onSelectJob;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        onSelectJob(vacancyData, vacancyID);
+        onSelectJob(vacancyData, context);
       },
       child: Card(
         margin: const EdgeInsets.only(bottom: 12, top: 0, left: 0, right: 0),
@@ -34,7 +33,7 @@ class VacancyItem extends StatelessWidget {
                       28,
                     ), // Image radius
                     child: Image.network(
-                      vacancyData['imageUrl']!,
+                      vacancyData.imageUrl,
                       fit: BoxFit.cover,
                     )),
               ),
@@ -45,7 +44,7 @@ class VacancyItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${StringFormattingHelper.trimAndCapitalizeWords(vacancyData['jobType'])} ${StringFormattingHelper.capitalizeWords(vacancyData['rangeType'])}',
+                    '${StringFormattingHelper.trimAndCapitalizeWords(vacancyData.jobType)} ${StringFormattingHelper.capitalizeWords(vacancyData.rangeType)}',
                     style: GoogleFonts.poppins(
                         color: Colors.black,
                         fontSize: 14,
@@ -55,7 +54,7 @@ class VacancyItem extends StatelessWidget {
                     height: 7,
                   ),
                   Text(
-                    vacancyData['pantiName'],
+                    vacancyData.pantiName,
                     style: GoogleFonts.poppins(
                         color: Colors.black,
                         fontSize: 10,
@@ -63,7 +62,7 @@ class VacancyItem extends StatelessWidget {
                   ),
                   Text(
                     StringFormattingHelper.trimAndCapitalizeWords(
-                        vacancyData['city']),
+                        vacancyData.city),
                     style: GoogleFonts.poppins(
                         color: Colors.black,
                         fontSize: 10,

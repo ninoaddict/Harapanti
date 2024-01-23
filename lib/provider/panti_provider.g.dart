@@ -6,7 +6,7 @@ part of 'panti_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$pantiDataHash() => r'd50199c5cb6046f5df930fc82f59e31a8b4ea69c';
+String _$pantiDataHash() => r'c1ba6da238629c1357126557c98287db6c80fa05';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -154,7 +154,7 @@ class _PantiDataProviderElement
   String get cityQuery => (origin as PantiDataProvider).cityQuery;
 }
 
-String _$singlePantiHash() => r'd5a8f1c85498e9ff5cf7e26ef320bf05a9722a78';
+String _$singlePantiHash() => r'83315439171de4761114200dc19cad5aeb67186c';
 
 /// See also [singlePanti].
 @ProviderFor(singlePanti)
@@ -282,7 +282,7 @@ class _SinglePantiProviderElement
   String get pantiID => (origin as SinglePantiProvider).pantiID;
 }
 
-String _$singlePantiByUserHash() => r'c63e45c1d218c359de0be808882e7eb98fef59a5';
+String _$singlePantiByUserHash() => r'411056add0ec27e645a9dea1e5c27761cfb01adf';
 
 /// See also [singlePantiByUser].
 @ProviderFor(singlePantiByUser)

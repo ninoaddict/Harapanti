@@ -1,11 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:harapanti/models/vacancy_model.dart';
+import 'package:harapanti/provider/vacancy_provider.dart';
 import 'package:harapanti/ui/personal/vacancy_detail.dart';
 import 'package:harapanti/widgets/error_page.dart';
 import 'package:harapanti/widgets/loading.dart';
 import 'package:harapanti/widgets/vacancy_item.dart';
 
-class VacancyList extends StatefulWidget {
+class VacancyList extends ConsumerWidget {
   const VacancyList({
     super.key,
     required this.listJobType,
@@ -16,75 +18,40 @@ class VacancyList extends StatefulWidget {
   final List<String> listJobType;
   final List<String> listRangeType;
   final void Function(int) setPageNumber;
-
-  @override
-  State<StatefulWidget> createState() {
-    return _VacancyListState();
-  }
-}
-
-class _VacancyListState extends State<VacancyList> {
-  late Stream<QuerySnapshot> _pantiStream;
-
-  @override
-  void initState() {
-    super.initState();
-    _pantiStream = FirebaseFirestore.instance
-        .collection('vacancy')
-        .orderBy('createdAt', descending: true)
-        .where(Filter.and(Filter('jobType', whereIn: widget.listJobType),
-            Filter('rangeType', whereIn: widget.listRangeType)))
-        .snapshots();
-  }
-
-  void _selectJob(Map<String, dynamic> vacancyData, String vacancyID) async {
+  void _selectJob(Vacancy vacancyData, BuildContext context) async {
     final response = await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (ctx) =>
-            VacancyDetailPage(vacancyData: vacancyData, vacancyID: vacancyID),
+        builder: (ctx) => VacancyDetailPage(vacancyData: vacancyData),
       ),
     );
-    if (response != null) widget.setPageNumber(response);
+    if (response != null) setPageNumber(response);
   }
 
   @override
-  Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: _pantiStream,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return const Expanded(
-              child:
-                  ErrorPage(msg: 'Something went wrong', color: Colors.black));
-        }
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Expanded(child: LoadingPage());
-        }
-        if (snapshot.data?.size == 0) {
-          return const Expanded(
-            child: ErrorPage(
-              msg: 'Belum ada lowongan',
-              color: Colors.black,
+  Widget build(BuildContext context, WidgetRef ref) {
+    AsyncValue<List<Vacancy>> vacancyData =
+        ref.watch(ListVacancyByFilterProvider(listJobType, listRangeType));
+
+    return switch (vacancyData) {
+      AsyncData(:final value) => value.isEmpty
+          ? const Expanded(
+              child: ErrorPage(msg: 'Belum ada lowongan', color: Colors.black))
+          : Expanded(
+              child: ListView.builder(
+                padding: EdgeInsets.zero,
+                itemCount: value.length,
+                itemBuilder: (context, index) {
+                  return VacancyItem(
+                    vacancyData: value[index],
+                    onSelectJob: _selectJob,
+                  );
+                },
+              ),
             ),
-          );
-        }
-        return Expanded(
-          child: ListView.builder(
-            padding: EdgeInsets.zero,
-            itemCount: snapshot.data!.size,
-            itemBuilder: (context, index) {
-              String vacancyID = snapshot.data!.docs[index].id;
-              Map<String, dynamic> data =
-                  snapshot.data!.docs[index].data() as Map<String, dynamic>;
-              return VacancyItem(
-                vacancyData: data,
-                onSelectJob: _selectJob,
-                vacancyID: vacancyID,
-              );
-            },
-          ),
-        );
-      },
-    );
+      AsyncError(:final error) => Expanded(
+          child: ErrorPage(msg: error.toString(), color: Colors.black),
+        ),
+      _ => const LoadingPage()
+    };
   }
 }

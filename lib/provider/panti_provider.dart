@@ -25,7 +25,8 @@ Future<List<Panti>> pantiData(PantiDataRef ref, String cityQuery) async {
               pengelola: ss.data()['pengelola'],
               est: ss.data()['est'],
               imageUrl: ss.data()['imageUrl'],
-              imageList: ss.data()['imageList']),
+              imageList: ss.data()['imageList'],
+              pantiID: ss.id),
         )
         .toList();
     return resultData;
@@ -48,7 +49,8 @@ Future<List<Panti>> pantiData(PantiDataRef ref, String cityQuery) async {
               pengelola: ss.data()['pengelola'],
               est: ss.data()['est'],
               imageUrl: ss.data()['imageUrl'],
-              imageList: ss.data()['imageList']),
+              imageList: ss.data()['imageList'],
+              pantiID: ss.id),
         )
         .toList();
     return resultData;
@@ -73,7 +75,8 @@ Future<Panti> singlePanti(SinglePantiRef ref, String pantiID) async {
       pengelola: pantiResp.data()!['pengelola'],
       est: pantiResp.data()!['est'],
       imageUrl: pantiResp.data()!['imageUrl'],
-      imageList: pantiResp.data()!['imageList']);
+      imageList: pantiResp.data()!['imageList'],
+      pantiID: pantiResp.id);
   return resultData;
 }
 
@@ -95,6 +98,7 @@ Future<Panti> singlePantiByUser(SinglePantiByUserRef ref, String userID) async {
       pengelola: pantiResp.docs[0].data()['pengelola'],
       est: pantiResp.docs[0].data()['est'],
       imageUrl: pantiResp.docs[0].data()['imageUrl'],
-      imageList: pantiResp.docs[0].data()['imageList']);
+      imageList: pantiResp.docs[0].data()['imageList'],
+      pantiID: pantiResp.docs[0].id);
   return resultData;
 }

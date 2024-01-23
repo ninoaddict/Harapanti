@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:harapanti/models/vacancy_model.dart';
 import 'package:harapanti/ui/personal/form.dart';
 import 'package:harapanti/utils/string_formatting_helper.dart';
 import 'package:harapanti/widgets/about_panti.dart';
 import 'package:harapanti/widgets/navigation_bar_item.dart';
 
 class VacancyDetailPage extends StatelessWidget {
-  const VacancyDetailPage(
-      {super.key, required this.vacancyData, required this.vacancyID});
+  const VacancyDetailPage({super.key, required this.vacancyData});
 
-  final Map<String, dynamic> vacancyData;
-  final String vacancyID;
+  final Vacancy vacancyData;
 
   Container customNavBar(BuildContext context) {
     return Container(
@@ -80,8 +79,8 @@ class VacancyDetailPage extends StatelessWidget {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (ctx) => FormPage(
-                    vacancyID: vacancyID,
-                    pantiID: vacancyData['pantiID'],
+                    vacancyID: vacancyData.vacancyID,
+                    pantiID: vacancyData.pantiID,
                   ),
                 ),
               );
@@ -124,7 +123,7 @@ class VacancyDetailPage extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          '${StringFormattingHelper.trimAndCapitalizeWords(vacancyData['jobType'])} ${StringFormattingHelper.capitalizeWords(vacancyData['rangeType'])}',
+                          '${StringFormattingHelper.trimAndCapitalizeWords(vacancyData.jobType)} ${StringFormattingHelper.capitalizeWords(vacancyData.rangeType)}',
                           style: GoogleFonts.poppins(
                             color: const Color(0xFF5645FF),
                             fontWeight: FontWeight.w700,
@@ -132,7 +131,7 @@ class VacancyDetailPage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          vacancyData['pantiName'],
+                          vacancyData.pantiName,
                           style: GoogleFonts.poppins(
                             color: const Color(0xFF5645FF),
                             fontWeight: FontWeight.w600,
@@ -173,7 +172,7 @@ class VacancyDetailPage extends StatelessWidget {
                     Row(children: [
                       Flexible(
                         child: Text(
-                          vacancyData['tanggungjawab'],
+                          vacancyData.tanggungjawab,
                           style: GoogleFonts.poppins(
                             fontSize: 13,
                             fontWeight: FontWeight.w500,
@@ -194,7 +193,7 @@ class VacancyDetailPage extends StatelessWidget {
                     Row(children: [
                       Flexible(
                         child: Text(
-                          vacancyData['syarat'],
+                          vacancyData.syarat,
                           style: GoogleFonts.poppins(
                             fontSize: 13,
                             fontWeight: FontWeight.w500,
@@ -214,7 +213,7 @@ class VacancyDetailPage extends StatelessWidget {
                     const SizedBox(
                       height: 12,
                     ),
-                    AboutPanti(pantiID: vacancyData['pantiID']),
+                    AboutPanti(pantiID: vacancyData.pantiID),
                   ],
                 ),
               ),
