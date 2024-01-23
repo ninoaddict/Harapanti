@@ -306,7 +306,6 @@ class _NewVacancyPageState extends ConsumerState<NewVacancyPage> {
       }
       setState(() {
         _isLoading = false;
-        ;
       });
     }
   }

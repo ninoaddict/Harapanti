@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:harapanti/models/application_model.dart';
 import 'package:harapanti/utils/string_formatting_helper.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 final dio = Dio();
@@ -87,9 +86,9 @@ class _ApplicantCardState extends State<ApplicantCard> {
 
           await dio.download(widget.appData.pdfUrl, filePath);
 
-          print("Download Completed. File saved to: $filePath");
+          // print("Download Completed. File saved to: $filePath");
         } catch (e) {
-          print("Download Failed.\n\n" + e.toString());
+          // print("Download Failed.\n\n" + e.toString());
         }
       } else {
         if (status.isPermanentlyDenied) {
@@ -102,7 +101,7 @@ class _ApplicantCardState extends State<ApplicantCard> {
             // Retry the download after the permission is granted.
             await savePdfFile();
           } else {
-            print('Permission denied');
+            // print('Permission denied');
           }
         }
       }
